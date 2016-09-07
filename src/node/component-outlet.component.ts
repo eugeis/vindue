@@ -22,105 +22,117 @@
 /*
  * @authors Suguru Inatomi, Jonas Möller, Dan Gilleland
  */
-import { NgModule, Component, ComponentFactory, ComponentMetadata, NgModuleMetadataType,
-	Directive, Input, ViewContainerRef, Compiler, ReflectiveInjector } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+ import {
+ 	Component,
+ 	ComponentMetadata,
+ 	ComponentFactoryResolver,
+ 	ComponentRef,
+ 	Compiler,
+ 	Directive,
+ 	Inject,
+ 	Input,
+ 	NgModule,
+ 	NgModuleMetadataType,
+ 	Type,
+ 	ViewContainerRef,
+ 	ReflectiveInjector
+ } from '@angular/core';
+ import { BrowserModule } from '@angular/platform-browser';
+ import { FormsModule } from '@angular/forms';
 
-/**
- * ComponentOutlet is a directive to create dynamic component.
- *
- * Example:
- *
- * ```ts
- * @Component({
- *   selector: 'my-app',
- *   template: `
- *     <div *componentOutlet="template; context: self; selector:'my-component'"></div>
- *   `,
- *   directives: [ComponentOutlet]
- * })
- * export class AppComponent {
- *   self = this;
- *
- *   template = `
- *   <div>
- *     <p>Dynamic Component</p>
- *   </div>`;
- * }
- * ```
- *
- * Result:
- *
- * ```html
- * <my-component>
- *    <div>
- *      <p>Dynamic Component</p>
- *    </div>
- * </my-component>
- * ```
- *
- */
+ /**
+  * ComponentOutlet is a directive to create dynamic component.
+  *
+  * Example:
+  *
+  * ```ts
+  * @Component({
+  *   selector: 'my-app',
+  *   template: `
+  *     <div *componentOutlet="template; context: self; selector:'my-component'"></div>
+  *   `,
+  *   directives: [ComponentOutlet]
+  * })
+  * export class AppComponent {
+  *   self = this;
+  *
+  *   template = `
+  *   <div>
+  *     <p>Dynamic Component</p>
+  *   </div>`;
+  * }
+  * ```
+  *
+  * Result:
+  *
+  * ```html
+  * <my-component>
+  *    <div>
+  *      <p>Dynamic Component</p>
+  *    </div>
+  * </my-component>
+  * ```
+  *
+  */
 
-@Directive({
-	selector: '[componentOutlet]',
-})
-export class ComponentOutlet {
-	@Input('componentOutlet') private template: string;
-	@Input('componentOutletSelector') private selector: string;
-	@Input('componentOutletContext') private context: Object;
-	@Input('componentOutletImports') private imports: any[];
+ @Directive({
+ 	selector: '[componentOutlet]',
+ })
+ export class ComponentOutlet {
+ 	@Input('componentOutlet') private template: string;
+ 	@Input('componentOutletSelector') private selector: string;
+ 	@Input('componentOutletContext') private context: Object;
+ 	@Input('componentOutletImports') private imports: any[] = [];
 
-	constructor(private vcRef: ViewContainerRef, private compiler: Compiler) {}
+ 	component: any;
 
-	private _createDynamicComponent() {
-		const metadata = new ComponentMetadata({
-			selector: this.selector,
-			template: this.template,
-		});
+ 	constructor(private vcRef: ViewContainerRef, private compiler: Compiler) {}
 
-		// have the new component class effectively inherit from this component
-		let ctx = this.context;
-		let cmpClass = class _ {
-			prototype:any = ctx;
-		};
-		let component = Component(metadata)(cmpClass);
+ 	private _createDynamicComponent(): Type<any> {
+ 		this.context = this.context || {};
 
-		// make a module that does not inherit from anything except Object
-		let mdClass = class _ {
-			prototype: any= {}
-		};
+ 		const metadata = new ComponentMetadata({
+ 			selector: this.selector,
+ 			template: this.template,
+ 		});
 
-		return NgModule({
-			imports: [CommonModule, BrowserModule, FormsModule].concat(this.imports),
-			declarations: [component],
-			exports: [component],
-			providers: []
-		})(mdClass);
-	}
+ 		const cmpClass = class _ { };
+ 		cmpClass.prototype = this.context;
+ 		return Component(metadata)(cmpClass);
+ 	}
 
-	ngOnChanges() {
-		let self = this;
+ 	private _createDynamicModule(component) {
+ 		const moduleMeta: NgModuleMetadataType = {
+ 			imports: [BrowserModule, FormsModule].concat(this.imports),
+ 			declarations: [component],
+ 			exports: [component],
+ 			providers: []
+ 		};
+ 		return NgModule(moduleMeta)(class _ { });
+ 	}
 
-		if (!self.template) return;
-		let selfDyn = self._createDynamicComponent();
-		self.compiler.compileModuleAndAllComponentsAsync(selfDyn)
-		.then(factory => {
-			// to remove any previously loaded template, if this template is re-created dynamically from the parent
-			self.vcRef.clear();
-
-			const injector = ReflectiveInjector.fromResolvedProviders([], self.vcRef.parentInjector);
-
-			let component:any;
-			for (let i = factory.componentFactories.length-1; i >= 0; i--) {
-				if (factory.componentFactories[i].selector === self.selector) {
-					component = factory.componentFactories[i];
-					break;
-				}
-			}
-
-			this.vcRef.createComponent(component, 0, injector);
-		});
-	}
-}
+ 	ngOnChanges() {
+ 		if (!this.template) return;
+ 		const cmpType = this._createDynamicComponent();
+ 		const moduleType = this._createDynamicModule(cmpType);
+ 		const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
+ 		this.compiler.compileModuleAndAllComponentsAsync<any>(moduleType)
+ 		.then(factory => {
+ 			let cmpFactory: any;
+ 			for (let i = factory.componentFactories.length - 1; i >= 0; i--) {
+ 				if (factory.componentFactories[i].selector === this.selector) {
+ 					cmpFactory = factory.componentFactories[i];
+ 					break;
+ 				}
+ 			}
+ 			return cmpFactory;
+ 		})
+ 		.then(cmpFactory => {
+ 			if (cmpFactory) {
+ 				this.vcRef.clear();
+ 				this.component = this.vcRef.createComponent(cmpFactory, 0, injector);
+ 				this.component.changeDetectorRef.detectChanges();
+ 			}
+ 		});
+ 	}
+ }

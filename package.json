@@ -1,6 +1,6 @@
 {
 	"name": "vindue",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A windowmanager in angular2",
 	"main": "index.js",
 	"scripts": {
