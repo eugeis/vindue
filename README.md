@@ -1,6 +1,8 @@
 # vindue
 Angular-based window manager for websites
 
+Working plunker: http://plnkr.co/edit/Gzelunl6rtApiTt7AUYn?p=preview
+
 ## Getting started
 
 **Install with npm**
