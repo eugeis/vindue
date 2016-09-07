@@ -107,6 +107,7 @@ export interface Tree extends NodeInterface.TreeNode {
 				[orientation]="tree.orientation"
 				[map]="map"
 				[panelModules]="panelModules"
+				[model]="model"
 				(on)="onPanelAction($event)">
 			</ee-node>
 		</div>
@@ -131,7 +132,10 @@ export interface Tree extends NodeInterface.TreeNode {
 export class TreeComponent implements OnInit {
 	@Input() windows: string[] = [];
 	@Input() map: Map.WindowMapper;
+
 	@Input() panelModules: any[];
+	@Input() model;
+
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
 	addWindow: boolean = false;

@@ -40,6 +40,7 @@ import NodeInterface = require('./treenode.interface');
 						[orientation]="nodeInv(orientation)"
 						[map]="map"
 						[panelModules]="panelModules"
+						[model]="model"
 						(addPanel)="addPanel($event)"
 						(promotePanel)="promotePanel($event)"
 						(closePanel)="deletePanel($event)"
@@ -54,6 +55,7 @@ import NodeInterface = require('./treenode.interface');
 					[data]="node.data"
 					[map]="map"
 					[panelModules]="panelModules"
+					[model]="model"
 					(add)="add($event)"
 					(on)="onPanelAction($event)"></ee-panel>
 			</div>
@@ -65,6 +67,8 @@ export class NodeComponent implements OnInit {
 	@Input() node: NodeInterface.TreeNode;
 	@Input() orientation: NodeOrientation;
 	@Input() map: Map.WindowMapper;
+
+	@Input() model;
 	@Input() panelModules: any[];
 
 	@Output("addPanel") addEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();

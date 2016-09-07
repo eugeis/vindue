@@ -55,6 +55,7 @@ interface OnPanelAction {
 
 export class PanelComponent implements OnInit, OnPanelAction {
 	@Input() data: any;
+	@Input() model: any;
 	@Input() map: Map.WindowMapper;
 	@Input() panelModules: any[];
 	@Output("add") addEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
