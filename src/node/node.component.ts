@@ -32,6 +32,42 @@ import NodeInterface = require('./treenode.interface');
 
 @Component({
 	selector: 'ee-node',
+	styles: [`
+		.ee-panel-container {
+			display: flex;
+			flex: 1;
+			flex-direction: inherit;
+			flex-direction: column !important;
+			position: relative;
+			background: white;
+			border-radius: 10px;
+			overflow: hidden;
+			margin: 1px;
+		}
+
+		.ee-node, .ee-node-direction, .ee-node-resizer {
+			display: flex;
+			flex: 1;
+			flex-direction: inherit;
+			position: relative;
+		}
+		.ee-node-direction.hor, .ee-separator.hor {
+			flex-direction: column;
+		}
+
+		.ee-node-direction.vert, .ee-separator.vert {
+			flex-direction: row;
+		}
+
+		.ee-node > div > div:last-child > ee-separator {
+			display: none;
+		}
+
+		ee-node, ee-panel {
+			display: flex;
+			flex: 1;
+		}
+	`],
 	template: `
 		<div *ngIf="node && orientation" class="ee-node">
 			<div *ngIf="node.branches && node.branches.length > 0" [ngClass]="nodeClass(orientation)" class="ee-node-direction">
@@ -39,7 +75,7 @@ import NodeInterface = require('./treenode.interface');
 					<ee-node [node]="branch"
 						[orientation]="nodeInv(orientation)"
 						[map]="map"
-						[panelModules]="panelModules"
+						[modules]="modules"
 						[model]="model"
 						(addPanel)="addPanel($event)"
 						(promotePanel)="promotePanel($event)"
@@ -54,7 +90,7 @@ import NodeInterface = require('./treenode.interface');
 				<ee-panel
 					[data]="node.data"
 					[map]="map"
-					[panelModules]="panelModules"
+					[modules]="modules"
 					[model]="model"
 					(add)="add($event)"
 					(on)="onPanelAction($event)"></ee-panel>
@@ -69,7 +105,7 @@ export class NodeComponent implements OnInit {
 	@Input() map: Map.WindowMapper;
 
 	@Input() model;
-	@Input() panelModules: any[];
+	@Input() modules: any[];
 
 	@Output("addPanel") addEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
 	@Output("promotePanel") promoteEmitter: EventEmitter<NodeInterface.TreeNode> = new EventEmitter<NodeInterface.TreeNode>();

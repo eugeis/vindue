@@ -98,6 +98,52 @@ export interface Tree extends NodeInterface.TreeNode {
 			text-decoration: none;
 			color: black;
 		}
+
+		/*
+		.ee-tree > ee-tree-view {
+			position: absolute;
+			bottom: 0;
+		}
+		*/
+
+		.ee-tree {
+			flex-direction: column !important;
+		}
+
+		.ee-tree {
+			display: flex;
+			flex: 1;
+			flex-direction: inherit;
+			position: relative;
+			height: 100%;
+			background: linear-gradient(to bottom, rgb(236, 236, 236) 0%,rgb(181, 181, 181) 100%) !important;
+		}
+
+		.ee-panel {
+			overflow: auto;
+		}
+
+		.ee-icon {
+			flex: 0 !important;
+			padding: 4px;
+		}
+
+		.ee-icon span {
+			font-weight: bold;
+			padding: 5px 12px 5px 12px;
+			border-radius: 4px;
+			cursor: pointer;
+			border: 1px solid transparent;
+		}
+
+		.ee-icon span:hover {
+			border: 1px solid #aaa;
+		}
+
+		ee-node {
+			display: flex;
+			flex: 1;
+		}
 	`],
 	template: `
 		<div class="ee-tree" *ngIf="tree.branches.length > 0" (click)="hideAddWindow()">
@@ -106,7 +152,7 @@ export interface Tree extends NodeInterface.TreeNode {
 				[node]="tree"
 				[orientation]="tree.orientation"
 				[map]="map"
-				[panelModules]="panelModules"
+				[modules]="modules"
 				[model]="model"
 				(on)="onPanelAction($event)">
 			</ee-node>
@@ -133,21 +179,18 @@ export class TreeComponent implements OnInit {
 	@Input() windows: string[] = [];
 	@Input() map: Map.WindowMapper;
 
-	@Input() panelModules: any[];
+	@Input() modules: any[];
 	@Input() model;
+
+	@Input() tree: Tree = {
+		orientation: NodeOrientation.Vertical,
+		branches: []
+	};
 
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
 	addWindow: boolean = false;
 	needle: string = "";
-
-	tree: Tree = {
-		orientation: NodeOrientation.Vertical,
-		branches: [{
-			branches: [],
-			data: "TaskDetails"
-		}]
-	};
 
 	constructor() {
 	}

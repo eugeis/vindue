@@ -48,6 +48,23 @@ import NodeInterface = require('../node/treenode.interface');
 			border-color: #ddd;
 			margin-bottom: 10px;
 		}
+
+		.ee-icon {
+			flex: 0 !important;
+			padding: 4px;
+		}
+
+		.ee-icon span {
+			font-weight: bold;
+			padding: 5px 12px 5px 12px;
+			border-radius: 4px;
+			cursor: pointer;
+			border: 1px solid transparent;
+		}
+
+		.ee-icon span:hover {
+			border: 1px solid #aaa;
+		}
 	`],
 	template: `
 		<div class="ee-panel-header" [drop]="closeEmitter" [node]="node" dragStart="'panel'">

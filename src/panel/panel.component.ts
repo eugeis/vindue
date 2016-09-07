@@ -35,6 +35,12 @@ interface OnPanelAction {
 @Component({
 	selector: 'ee-panel',
 	styles: [`
+		.ee-panel {
+			display: flex;
+			flex: 1;
+			flex-direction: inherit;
+			position: relative;
+		}
 		.ee-panel-hover {
 			position: absolute;
 			width: 100%;
@@ -44,11 +50,19 @@ interface OnPanelAction {
 			z-index: 100;
 			pointer-events: none;
 		}
+		ee-panel-data {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			padding: 5px;
+		}
 	`],
 	template: `
 		<div class="ee-panel" [dropInfo]="dropInfo" (rearrange)="rearrange($event)" dropZone="'panel'">
 			<div class="ee-panel-hover" [dropInfo]="dropInfo" *ngIf="dropInfo.display" dropIndicator></div>
-			<div class="ee-panel-data" *componentOutlet="html; context:self; selector:'ee-panel-data'; imports:panelModules">{{data}}</div>
+			<div class="ee-panel-data" *componentOutlet="html; context:self; selector:'ee-panel-data'; imports:modules">{{data}}</div>
 		</div>
 	`
 })
@@ -57,7 +71,7 @@ export class PanelComponent implements OnInit, OnPanelAction {
 	@Input() data: any;
 	@Input() model: any;
 	@Input() map: Map.WindowMapper;
-	@Input() panelModules: any[];
+	@Input() modules: any[];
 	@Output("add") addEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
