@@ -1,0 +1,27 @@
+{
+	"name": "vindue",
+	"version": "0.0.2",
+	"description": "A windowmanager in angular2",
+	"main": "index.js",
+	"scripts": {
+		"tsc": "tsc"
+	},
+	"author": "Jonas Möller",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/j-moeller/vindue"
+	},
+	"license": "Apache-2.0",
+	"dependencies": {
+		"@angular/common": "2.0.0-rc.6",
+		"@angular/compiler": "2.0.0-rc.6",
+		"@angular/core": "2.0.0-rc.6",
+		"@angular/forms": "2.0.0-rc.6",
+		"@angular/platform-browser": "2.0.0-rc.6"
+	},
+	"devDependencies": {
+		"rxjs": "^5.0.0-beta.11",
+		"typescript": "^1.8.10",
+		"zone.js": "^0.6.17"
+	}
+}
