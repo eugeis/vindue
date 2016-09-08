@@ -18,7 +18,7 @@
  *
  * @author Jonas Möller
  */
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 
 import { DropZone } from '../drag/dropzone.directive';
 import { DropIndicator } from '../drag/dropindicator.directive';
@@ -59,7 +59,7 @@ interface OnPanelAction {
 	`
 })
 
-export class PanelComponent implements OnInit, OnPanelAction {
+export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 	@Input() data: any;
 	@Input() model: any;
 	@Input() map: Map.WindowMapper;
@@ -121,5 +121,9 @@ export class PanelComponent implements OnInit, OnPanelAction {
 
 		this.dropInfo.source = node;
 		this.addEmitter.emit(this.dropInfo);
+	}
+
+	ngOnDestroy() {
+		this.self = null;
 	}
 }

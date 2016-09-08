@@ -22,117 +22,99 @@
 /*
  * @authors Suguru Inatomi, Jonas Möller, Dan Gilleland
  */
- import {
- 	Component,
- 	ComponentMetadata,
- 	ComponentFactoryResolver,
- 	ComponentRef,
- 	Compiler,
- 	Directive,
- 	Inject,
- 	Input,
- 	NgModule,
- 	NgModuleMetadataType,
- 	Type,
- 	ViewContainerRef,
- 	ReflectiveInjector
- } from '@angular/core';
- import { BrowserModule } from '@angular/platform-browser';
- import { FormsModule } from '@angular/forms';
+import {
+	Component,
+	ComponentMetadata,
+	ComponentFactoryResolver,
+	ComponentRef,
+	Compiler,
+	Directive,
+	Inject,
+	Input,
+	NgModule,
+	NgModuleMetadataType,
+	Type,
+	ViewContainerRef,
+	ReflectiveInjector,
+	OnDestroy,
+	ComponentFactory
+} from '@angular/core';
 
- /**
-  * ComponentOutlet is a directive to create dynamic component.
-  *
-  * Example:
-  *
-  * ```ts
-  * @Component({
-  *   selector: 'my-app',
-  *   template: `
-  *     <div *componentOutlet="template; context: self; selector:'my-component'"></div>
-  *   `,
-  *   directives: [ComponentOutlet]
-  * })
-  * export class AppComponent {
-  *   self = this;
-  *
-  *   template = `
-  *   <div>
-  *     <p>Dynamic Component</p>
-  *   </div>`;
-  * }
-  * ```
-  *
-  * Result:
-  *
-  * ```html
-  * <my-component>
-  *    <div>
-  *      <p>Dynamic Component</p>
-  *    </div>
-  * </my-component>
-  * ```
-  *
-  */
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
- @Directive({
- 	selector: '[componentOutlet]',
- })
- export class ComponentOutlet {
- 	@Input('componentOutlet') private template: string;
- 	@Input('componentOutletSelector') private selector: string;
- 	@Input('componentOutletContext') private context: Object;
- 	@Input('componentOutletImports') private imports: any[] = [];
+@Directive({
+	selector: '[componentOutlet]',
+})
+export class ComponentOutlet implements OnDestroy {
+	@Input('componentOutlet') private template: string;
+	@Input('componentOutletSelector') private selector: string;
+	@Input('componentOutletContext') private context: any = {};
+	@Input('componentOutletImports') private imports: any[] = [];
 
- 	component: any;
+	component: ComponentRef<any>;
+	moduleType: any;
+	cmpType: any;
 
- 	constructor(private vcRef: ViewContainerRef, private compiler: Compiler) {}
+	constructor(private vcRef: ViewContainerRef, private compiler: Compiler) {}
 
- 	private _createDynamicComponent(): Type<any> {
- 		this.context = this.context || {};
+	private _createDynamicComponent(): Type<any> {
+		let ctx = this.context;
 
- 		const metadata = new ComponentMetadata({
- 			selector: this.selector,
- 			template: this.template,
- 		});
+		const metadata = new ComponentMetadata({
+			selector: this.selector,
+			template: this.template,
+		});
 
- 		const cmpClass = class _ { };
- 		cmpClass.prototype = this.context;
- 		return Component(metadata)(cmpClass);
- 	}
+		let cmpClass = class _ implements OnDestroy {
+			context = ctx;
 
- 	private _createDynamicModule(component) {
- 		const moduleMeta: NgModuleMetadataType = {
- 			imports: [BrowserModule, FormsModule].concat(this.imports),
- 			declarations: [component],
- 			exports: [component],
- 			providers: []
- 		};
- 		return NgModule(moduleMeta)(class _ { });
- 	}
+			ngOnDestroy() {
+				ctx = null;
+			}
+		};
 
- 	ngOnChanges() {
- 		if (!this.template) return;
- 		const cmpType = this._createDynamicComponent();
- 		const moduleType = this._createDynamicModule(cmpType);
- 		const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
- 		this.compiler.compileModuleAndAllComponentsAsync<any>(moduleType)
- 		.then(factory => {
- 			let cmpFactory: any;
- 			for (let i = factory.componentFactories.length - 1; i >= 0; i--) {
- 				if (factory.componentFactories[i].selector === this.selector) {
- 					cmpFactory = factory.componentFactories[i];
- 					break;
- 				}
- 			}
- 			return cmpFactory;
- 		})
- 		.then(cmpFactory => {
- 			if (cmpFactory) {
- 				this.vcRef.clear();
- 				this.component = this.vcRef.createComponent(cmpFactory, 0, injector);
- 				this.component.changeDetectorRef.detectChanges();
- 			}
- 		});
- 	}
- }
+		return Component(metadata)(cmpClass);
+	}
+
+	private _createDynamicModule(component) {
+		const moduleMeta: NgModuleMetadataType = {
+			imports: [BrowserModule, FormsModule].concat(this.imports),
+			declarations: [component],
+			exports: [component],
+			providers: []
+		};
+		return NgModule(moduleMeta)(class _ { });
+	}
+
+	ngOnChanges() {
+		if (!this.template) return;
+		this.cmpType = this._createDynamicComponent();
+		this.moduleType = this._createDynamicModule(this.cmpType);
+		const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
+		this.compiler.compileModuleAndAllComponentsAsync<any>(this.moduleType)
+		.then(factory => {
+			let cmpFactory: ComponentFactory<any>;
+			for (let i = factory.componentFactories.length - 1; i >= 0; i--) {
+				if (factory.componentFactories[i].selector === this.selector) {
+					cmpFactory = factory.componentFactories[i];
+					break;
+				}
+			}
+			return cmpFactory;
+		})
+		.then(cmpFactory => {
+			if (cmpFactory) {
+				this.vcRef.clear();
+				this.component = this.vcRef.createComponent(cmpFactory, 0, injector);
+				this.component.changeDetectorRef.detectChanges();
+			}
+		});
+	}
+
+	ngOnDestroy() {
+		this.component.destroy();
+		this.compiler.clearCacheFor(this.cmpType);
+		this.compiler.clearCacheFor(this.moduleType);
+	}
+}
