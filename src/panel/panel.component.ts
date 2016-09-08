@@ -50,14 +50,6 @@ interface OnPanelAction {
 			z-index: 100;
 			pointer-events: none;
 		}
-		ee-panel-data {
-			display: block;
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			padding: 5px;
-		}
 	`],
 	template: `
 		<div class="ee-panel" [dropInfo]="dropInfo" (rearrange)="rearrange($event)" dropZone="'panel'">

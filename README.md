@@ -82,11 +82,26 @@ export class AppComponent {
 }
 ```
 
-**Additional styles for full-screen app**
+**Additional styles for**
+
+*full-screen app*
 
 ```css
 html, body {
 	width: 100%;
 	height: 100%;
+}
+```
+
+*unlimited resizing of windows*
+
+```css
+.ee-panel > ee-panel-data {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 5px;
 }
 ```
