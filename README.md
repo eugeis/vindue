@@ -1,7 +1,9 @@
 # vindue
-Angular-based window manager for websites
+Angular2-based window manager for websites
 
 Working plunker: http://plnkr.co/edit/Gzelunl6rtApiTt7AUYn?p=preview
+
+[Documentation](https://github.com/j-moeller/vindue/blob/master/DOCUMENTATION.md)
 
 ## Getting started
 
@@ -80,7 +82,7 @@ export class AppComponent {
 }
 ```
 
-**Additional styles for full-screen app** 
+**Additional styles for full-screen app**
 
 ```css
 html, body {
