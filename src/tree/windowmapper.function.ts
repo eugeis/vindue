@@ -18,6 +18,9 @@
  *
  * @author Jonas Möller
  */
-export interface WindowMapper {
-	callback(data: any): string;
+
+export namespace Map {
+	export interface WindowMapper {
+		callback(data: any): string;
+	}
 }

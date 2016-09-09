@@ -21,7 +21,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { DragStart } from '../drag/dragstart.directive';
-import NodeInterface = require('../node/treenode.interface');
+import { NodeInterface } from '../node/treenode.interface';
 
 @Component({
 	selector: 'ee-panel-header',

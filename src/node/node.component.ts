@@ -27,8 +27,8 @@ import { CardinalDirection } from '../drag/cardinaldirection.enum';
 import { PanelComponent } from '../panel/panel.component';
 import { PanelHeaderComponent } from '../panel/panel-header.component';
 
-import Map = require('../tree/windowmapper.function');
-import NodeInterface = require('./treenode.interface');
+import { NodeInterface } from './treenode.interface';
+import { Map } from '../tree/windowmapper.function';
 
 @Component({
 	selector: 'ee-node',

@@ -25,8 +25,8 @@ import { DropIndicator } from '../drag/dropindicator.directive';
 import { DropInfo } from '../drag/dropinfo.model';
 import { CardinalDirection } from '../drag/cardinaldirection.enum';
 
-import Map = require('../tree/windowmapper.function');
-import NodeInterface = require('../node/treenode.interface');
+import { NodeInterface } from '../node/treenode.interface';
+import { Map } from '../tree/windowmapper.function';
 
 interface OnPanelAction {
 	onPanelAction(e): void;

@@ -18,16 +18,19 @@
  *
  * @author Jonas Möller
  */
-export interface TreeNode {
-	branches: TreeNode[],
-	data?: any,
-	size?: number
-}
 
-export function cloneNodeShallow(n: TreeNode): TreeNode {
-	return {
-		branches: n.branches,
-		data: n.data,
-		size: n.size
+export namespace NodeInterface {
+	export interface TreeNode {
+		branches: TreeNode[],
+		data?: any,
+		size?: number
+	}
+
+	export function cloneNodeShallow(n: TreeNode): TreeNode {
+		return {
+			branches: n.branches,
+			data: n.data,
+			size: n.size
+		}
 	}
 }

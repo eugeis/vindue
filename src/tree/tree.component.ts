@@ -24,8 +24,8 @@ import { TreeHeaderComponent } from './tree-header.component';
 import { NodeComponent } from '../node/node.component';
 import { NodeOrientation } from '../node/nodeorientation.enum';
 
-import Map = require('./windowmapper.function');
-import NodeInterface = require('../node/treenode.interface');
+import { NodeInterface } from '../node/treenode.interface';
+import { Map } from './windowmapper.function';
 
 export interface Tree extends NodeInterface.TreeNode {
 	orientation: NodeOrientation
