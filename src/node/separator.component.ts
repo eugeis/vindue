@@ -74,7 +74,7 @@ export class SeparatorComponent implements OnInit {
 					ratio = this.calcVert(e);
 					break;
 				default:
-				throw "up";
+				throw "Unknown NodeOrientation";
 			}
 
 			let sum = this.left.size + this.right.size;
