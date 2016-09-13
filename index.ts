@@ -1,4 +1,6 @@
-export { WindowManagerModule } from './src/windowmanager.module';
+export * from './src/windowmanager.module';
 
-export { Tree, TreeComponent } from './src/tree/tree.component';
-export { NodeOrientation } from './src/node/nodeorientation.enum';
+export * from './src/tree/tree.component';
+export * from './src/node/nodeorientation.enum';
+
+export * from './src/wrapper.model';
