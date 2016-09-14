@@ -56,7 +56,7 @@ interface OnPanelAction {
 	template: `
 		<div class="ee-panel" [dropInfo]="dropInfo" (rearrange)="rearrange($event)" dropZone="'panel'">
 			<div class="ee-panel-hover" [dropInfo]="dropInfo" *ngIf="dropInfo.display" dropIndicator></div>
-			<div class="ee-panel-data" *componentOutlet="html; context:self; selector:'ee-panel-data'; imports:modules">{{name}}</div>
+			<div class="ee-panel-data" *componentOutlet="html; context:self; selector:'ee-panel-data'">{{name}}</div>
 		</div>
 	`
 })
@@ -67,7 +67,6 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 	@Input() window: string;
 
 	@Input() map: Map.WindowMapper;
-	@Input() modules: any[];
 
 	@Output("add") addEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();

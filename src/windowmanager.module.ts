@@ -22,6 +22,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { ComponentOutlet } from 'angular2-component-outlet';
+
 /* Drag-Elements */
 import { DragModule } from './drag/drag.module';
 
@@ -40,8 +42,6 @@ import { LimitPipe } from './pipes/limit.pipe';
 /* TreeElements */
 import { TreeComponent } from './tree/tree.component';
 import { TreeHeaderComponent } from './tree/tree-header.component';
-
-import { ComponentOutlet } from './node/component-outlet.component';
 
 @NgModule({
 	imports: [CommonModule, FormsModule, DragModule],

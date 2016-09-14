@@ -77,7 +77,6 @@ import { Map } from '../tree/windowmapper.function';
 						[node]="branch"
 						[orientation]="nodeInv(orientation)"
 						[map]="map"
-						[modules]="modules"
 						[sharedData]="sharedData"
 						(addPanel)="addPanel($event)"
 						(promotePanel)="promotePanel($event)"
@@ -93,7 +92,6 @@ import { Map } from '../tree/windowmapper.function';
 					[window]="node.window"
 					[model]="node.model"
 					[map]="map"
-					[modules]="modules"
 					[sharedData]="sharedData"
 					(add)="add($event)"
 					(on)="onPanelAction($event)"></ee-panel>
@@ -108,7 +106,6 @@ export class NodeComponent implements OnInit {
 	@Input() map: Map.WindowMapper;
 
 	@Input() sharedData;
-	@Input() modules: any[];
 
 	@Output("addPanel") addEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
 	@Output("promotePanel") promoteEmitter: EventEmitter<NodeInterface.TreeNode> = new EventEmitter<NodeInterface.TreeNode>();
