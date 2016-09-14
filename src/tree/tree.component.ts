@@ -153,7 +153,7 @@ export interface Tree extends NodeInterface.TreeNode {
 				[orientation]="tree.orientation"
 				[map]="map"
 				[modules]="modules"
-				[model]="model"
+				[sharedData]="sharedData"
 				(on)="onPanelAction($event)">
 			</ee-node>
 		</div>
@@ -180,7 +180,7 @@ export class TreeComponent implements OnInit {
 	@Input() map: Map.WindowMapper;
 
 	@Input() modules: any[];
-	@Input() model;
+	@Input() sharedData;
 
 	@Input() tree: Tree = {
 		orientation: NodeOrientation.Vertical,

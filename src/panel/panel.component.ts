@@ -61,9 +61,10 @@ interface OnPanelAction {
 
 export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 	@Input() data: any;
-	@Input() model: any;
+	@Input() sharedData: any;
 	@Input() map: Map.WindowMapper;
 	@Input() modules: any[];
+
 	@Output("add") addEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
