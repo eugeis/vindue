@@ -56,15 +56,16 @@ interface OnPanelAction {
 	template: `
 		<div class="ee-panel" [dropInfo]="dropInfo" (rearrange)="rearrange($event)" dropZone="'panel'">
 			<div class="ee-panel-hover" [dropInfo]="dropInfo" *ngIf="dropInfo.display" dropIndicator></div>
-			<div class="ee-panel-data" *componentOutlet="html; context:self; selector:'ee-panel-data'; imports:modules">{{data}}</div>
+			<div class="ee-panel-data" *componentOutlet="html; context:self; selector:'ee-panel-data'; imports:modules">{{name}}</div>
 		</div>
 	`
 })
 
 export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
-	@Input() data: any;
 	@Input() sharedData: any;
 	@Input() model: Wrapper<any>;
+	@Input() window: string;
+
 	@Input() map: Map.WindowMapper;
 	@Input() modules: any[];
 
@@ -81,8 +82,8 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 	}
 
 	ngOnInit() {
-		if (this.data && this.map) {
-			this.html = this.map.callback(this.data);
+		if (this.window && this.map) {
+			this.html = this.map.callback(this.window);
 		}
 	}
 

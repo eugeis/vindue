@@ -24,7 +24,8 @@ import { Wrapper } from '../wrapper.model';
 export namespace NodeInterface {
 	export interface TreeNode {
 		branches: TreeNode[],
-		data?: any,
+		name?: string,
+		window?: string,
 		model?: Wrapper<any>,
 		size?: number
 	}
@@ -32,7 +33,8 @@ export namespace NodeInterface {
 	export function cloneNodeShallow(n: TreeNode): TreeNode {
 		return {
 			branches: n.branches,
-			data: n.data,
+			name: n.name,
+			window: n.window,
 			model: n.model,
 			size: n.size
 		}

@@ -205,7 +205,8 @@ export class TreeComponent {
 	add(view: string) {
 		this.tree.branches.push({
 			branches: [],
-			data: view
+			name: view,
+			window: view
 		});
 		this.hideAddWindow();
 	}

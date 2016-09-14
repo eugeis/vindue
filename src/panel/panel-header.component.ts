@@ -68,7 +68,13 @@ import { NodeInterface } from '../node/treenode.interface';
 	`],
 	template: `
 		<div class="ee-panel-header" [drop]="closeEmitter" [node]="node" dragStart="'panel'">
-			<div class="ee-panel-header-heading">{{node?.data}}</div>
+			<div class="ee-panel-header-heading">
+				<span [hidden]="changeName" (click)="toggleName()">{{node?.name}}</span>
+				<form [hidden]="!changeName" (ngSubmit)="toggleName()">
+					<input type="text" [(ngModel)]="node.name" [ngModelOptions]="{standalone: true}">
+					<input type="submit" value="Ok">
+				</form>
+			</div>
 			<div class="ee-panel-header-space"></div>
 			<!--<div class="ee-icon flex"><span (click)="minimize()">_</span></div>-->
 			<div class="ee-icon"><span (click)="close()">x</span></div>
@@ -80,9 +86,15 @@ export class PanelHeaderComponent {
 	@Input() node: NodeInterface.TreeNode;
 	@Output("close") closeEmitter: EventEmitter<void> = new EventEmitter<void>();
 
+	changeName: boolean = false;
+
 	constructor() { }
 
 	close(): void {
 		this.closeEmitter.emit();
+	}
+
+	toggleName() {
+		this.changeName = !this.changeName;
 	}
 }

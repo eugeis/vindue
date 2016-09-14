@@ -90,7 +90,7 @@ import { Map } from '../tree/windowmapper.function';
 			<div *ngIf="!node.branches || node.branches.length == 0" class="ee-panel-container">
 				<ee-panel-header [node]="node" (close)="closePanel()"></ee-panel-header>
 				<ee-panel
-					[data]="node.data"
+					[window]="node.window"
 					[model]="node.model"
 					[map]="map"
 					[modules]="modules"
@@ -126,6 +126,9 @@ export class NodeComponent implements OnInit {
 			}
 		}
 
+		if (this.node.window && !this.node.name) {
+			this.node.name = this.node.window;
+		}
 	}
 
 	nodeClass(orientation: NodeOrientation): string {
