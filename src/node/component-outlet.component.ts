@@ -24,7 +24,6 @@
  */
 import {
 	Component,
-	ComponentMetadata,
 	ComponentFactoryResolver,
 	ComponentRef,
 	Compiler,
@@ -32,7 +31,6 @@ import {
 	Inject,
 	Input,
 	NgModule,
-	NgModuleMetadataType,
 	Type,
 	ViewContainerRef,
 	ReflectiveInjector,
@@ -61,7 +59,7 @@ export class ComponentOutlet implements OnDestroy {
 	private _createDynamicComponent(): Type<any> {
 		let ctx = this.context;
 
-		const metadata = new ComponentMetadata({
+		const metadata = new Component({
 			selector: this.selector,
 			template: this.template,
 		});
@@ -78,7 +76,7 @@ export class ComponentOutlet implements OnDestroy {
 	}
 
 	private _createDynamicModule(component) {
-		const moduleMeta: NgModuleMetadataType = {
+		const moduleMeta: NgModule = {
 			imports: [BrowserModule, FormsModule].concat(this.imports),
 			declarations: [component],
 			exports: [component],
