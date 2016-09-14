@@ -28,6 +28,8 @@ import { PanelComponent } from '../panel/panel.component';
 import { PanelHeaderComponent } from '../panel/panel-header.component';
 import { Wrapper } from '../wrapper.model';
 
+import * as NodeFunctions from './node.functions';
+
 import { NodeInterface } from './treenode.interface';
 import { Map } from '../tree/windowmapper.function';
 
@@ -145,31 +147,8 @@ export class NodeComponent implements OnInit {
 		}
 	}
 
-	addPanel(d: DropInfo): void {
-		let i = this.node.branches.indexOf(d.target);
-		let dir: CardinalDirection = d.direction;
-		let orientation: NodeOrientation = this.orientation;
-		let branches: NodeInterface.TreeNode[] = this.node.branches;
-
-		if (dir === CardinalDirection.North && orientation === NodeOrientation.Horizontal
-		 || dir === CardinalDirection.West && orientation === NodeOrientation.Vertical) {
-			branches.splice(i, 0, d.source);
-		} else if (dir === CardinalDirection.South && orientation === NodeOrientation.Horizontal
-		 || dir === CardinalDirection.East && orientation === NodeOrientation.Vertical) {
-			branches.splice(i+1, 0, d.source);
-		} else {
-			let n: NodeInterface.TreeNode = {
-				branches: []
-			};
-
-			let removed: NodeInterface.TreeNode = branches.splice(i, 1, n)[0];
-
-			if (dir === CardinalDirection.North || dir === CardinalDirection.West) {
-				n.branches = [d.source, removed];
-			} else {
-				n.branches = [removed, d.source];
-			}
-		}
+	addPanel(dropInfo: DropInfo) {
+		NodeFunctions.addPanel(dropInfo, this.orientation, this.node.branches);
 	}
 
 	closePanel(): void {
@@ -177,10 +156,7 @@ export class NodeComponent implements OnInit {
 	}
 
 	deletePanel(childNode: NodeInterface.TreeNode): void {
-		let i = this.node.branches.indexOf(childNode);
-		if (0 <= i && i < this.node.branches.length) {
-			this.node.branches.splice(i, 1);
-		}
+		NodeFunctions.deletePanel(childNode, this.node.branches);
 
 		if (this.node.branches.length == 1) {
 			this.promoteEmitter.emit(this.node);
@@ -188,19 +164,7 @@ export class NodeComponent implements OnInit {
 	}
 
 	promotePanel(childNode: NodeInterface.TreeNode): void {
-		let i = this.node.branches.indexOf(childNode);
-		if (0 <= i && i < this.node.branches.length && childNode.branches.length == 1) {
-			if (childNode.branches[0].branches.length <= 1) {
-				childNode.branches[0].size = this.node.branches[i].size;
-				this.node.branches[i] = childNode.branches[0];
-			} else {
-				let removed: NodeInterface.TreeNode = this.node.branches.splice(i, 1)[0];
-				childNode.branches[0].branches.forEach(function(d) {
-					d.size = removed.size / childNode.branches[0].branches.length;
-				});
-				this.node.branches.splice.apply(this.node.branches, [<any>i, 0].concat(childNode.branches[0].branches));
-			}
-		}
+		NodeFunctions.promotePanel(childNode, this.node.branches);
 	}
 
 	onPanelAction(e) {
