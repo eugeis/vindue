@@ -80,7 +80,7 @@ import { Map } from '../tree/windowmapper.function';
 						[orientation]="nodeInv(orientation)"
 						[map]="map"
 						[sharedData]="sharedData"
-						(addPanel)="addPanel($event)"
+						(insertPanel)="insertPanel($event)"
 						(promotePanel)="promotePanel($event)"
 						(closePanel)="deletePanel($event)"
 						(on)="onPanelAction($event)">
@@ -95,7 +95,7 @@ import { Map } from '../tree/windowmapper.function';
 					[model]="node.model"
 					[map]="map"
 					[sharedData]="sharedData"
-					(add)="add($event)"
+					(insert)="insert($event)"
 					(on)="onPanelAction($event)"></ee-panel>
 			</div>
 		</div>
@@ -109,7 +109,7 @@ export class NodeComponent implements OnInit {
 
 	@Input() sharedData;
 
-	@Output("addPanel") addEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
+	@Output("insertPanel") insertEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
 	@Output("promotePanel") promoteEmitter: EventEmitter<NodeInterface.TreeNode> = new EventEmitter<NodeInterface.TreeNode>();
 	@Output("closePanel") closeEmitter: EventEmitter<NodeInterface.TreeNode> = new EventEmitter<NodeInterface.TreeNode>();
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
@@ -138,17 +138,17 @@ export class NodeComponent implements OnInit {
 		return inv(orientation);
 	}
 
-	add(dropInfo: DropInfo): void {
+	insert(dropInfo: DropInfo): void {
 		dropInfo.target = this.node;
 		if (dropInfo.target !== dropInfo.source) {
 			dropInfo.source = NodeInterface.cloneNodeShallow(dropInfo.source);
 
-			this.addEmitter.emit(dropInfo);
+			this.insertEmitter.emit(dropInfo);
 		}
 	}
 
-	addPanel(dropInfo: DropInfo) {
-		NodeFunctions.addPanel(dropInfo, this.orientation, this.node.branches);
+	insertPanel(dropInfo: DropInfo) {
+		NodeFunctions.insertPanel(dropInfo, this.orientation, this.node.branches);
 	}
 
 	closePanel(): void {

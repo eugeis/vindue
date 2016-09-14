@@ -26,7 +26,7 @@ import { NodeOrientation } from './nodeorientation.enum';
 
 import { NodeInterface } from './treenode.interface';
 
-export function addPanel(d: DropInfo, orientation: NodeOrientation, branches: NodeInterface.TreeNode[]): void {
+export function insertPanel(d: DropInfo, orientation: NodeOrientation, branches: NodeInterface.TreeNode[]): void {
 	let i: number = branches.indexOf(d.target);
 	let dir: CardinalDirection = d.direction;
 

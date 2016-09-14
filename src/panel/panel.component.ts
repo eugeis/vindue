@@ -68,7 +68,7 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 
 	@Input() map: Map.WindowMapper;
 
-	@Output("add") addEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
+	@Output("insert") insertEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
 	html: string;
@@ -124,7 +124,7 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 		}
 
 		this.dropInfo.source = node;
-		this.addEmitter.emit(this.dropInfo);
+		this.insertEmitter.emit(this.dropInfo);
 	}
 
 	ngOnDestroy() {
