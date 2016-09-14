@@ -19,10 +19,13 @@
  * @author Jonas Möller
  */
 
+import { Wrapper } from '../wrapper.model';
+
 export namespace NodeInterface {
 	export interface TreeNode {
 		branches: TreeNode[],
 		data?: any,
+		model?: Wrapper<any>,
 		size?: number
 	}
 
@@ -30,6 +33,7 @@ export namespace NodeInterface {
 		return {
 			branches: n.branches,
 			data: n.data,
+			model: n.model,
 			size: n.size
 		}
 	}

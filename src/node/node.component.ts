@@ -26,6 +26,7 @@ import { SeparatorComponent } from './separator.component';
 import { CardinalDirection } from '../drag/cardinaldirection.enum';
 import { PanelComponent } from '../panel/panel.component';
 import { PanelHeaderComponent } from '../panel/panel-header.component';
+import { Wrapper } from '../wrapper.model';
 
 import { NodeInterface } from './treenode.interface';
 import { Map } from '../tree/windowmapper.function';
@@ -72,7 +73,8 @@ import { Map } from '../tree/windowmapper.function';
 		<div *ngIf="node && orientation" class="ee-node">
 			<div *ngIf="node.branches && node.branches.length > 0" [ngClass]="nodeClass(orientation)" class="ee-node-direction">
 				<div *ngFor="let branch of node.branches; let i = index" class="ee-node-resizer" [style.flex-grow]="branch.size">
-					<ee-node [node]="branch"
+					<ee-node
+						[node]="branch"
 						[orientation]="nodeInv(orientation)"
 						[map]="map"
 						[modules]="modules"
@@ -89,6 +91,7 @@ import { Map } from '../tree/windowmapper.function';
 				<ee-panel-header [node]="node" (close)="closePanel()"></ee-panel-header>
 				<ee-panel
 					[data]="node.data"
+					[model]="node.model"
 					[map]="map"
 					[modules]="modules"
 					[sharedData]="sharedData"
@@ -116,6 +119,13 @@ export class NodeComponent implements OnInit {
 		this.node.branches.forEach(function(d) {
 			d.size = d.size || 1;
 		});
+
+		if (!this.node.branches || this.node.branches.length == 0) {
+			if (!this.node.model) {
+				this.node.model = new Wrapper<any>({});
+			}
+		}
+
 	}
 
 	nodeClass(orientation: NodeOrientation): string {

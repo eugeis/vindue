@@ -24,6 +24,7 @@ import { DropZone } from '../drag/dropzone.directive';
 import { DropIndicator } from '../drag/dropindicator.directive';
 import { DropInfo } from '../drag/dropinfo.model';
 import { CardinalDirection } from '../drag/cardinaldirection.enum';
+import { Wrapper } from '../wrapper.model';
 
 import { NodeInterface } from '../node/treenode.interface';
 import { Map } from '../tree/windowmapper.function';
@@ -63,6 +64,7 @@ interface OnPanelAction {
 export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 	@Input() data: any;
 	@Input() sharedData: any;
+	@Input() model: Wrapper<any>;
 	@Input() map: Map.WindowMapper;
 	@Input() modules: any[];
 
