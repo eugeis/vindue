@@ -40,6 +40,7 @@ interface OnPanelAction {
 			flex: 1;
 			flex-direction: inherit;
 			position: relative;
+			overflow: auto;
 		}
 		.ee-panel-hover {
 			position: absolute;
