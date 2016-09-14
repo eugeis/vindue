@@ -18,7 +18,7 @@
  *
  * @author Jonas Möller
  */
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { TreeHeaderComponent } from './tree-header.component';
 import { NodeComponent } from '../node/node.component';
@@ -175,7 +175,7 @@ export interface Tree extends NodeInterface.TreeNode {
 	`
 })
 
-export class TreeComponent implements OnInit {
+export class TreeComponent {
 	@Input() windows: string[] = [];
 	@Input() map: Map.WindowMapper;
 
@@ -191,13 +191,6 @@ export class TreeComponent implements OnInit {
 
 	addWindow: boolean = false;
 	needle: string = "";
-
-	constructor() {
-	}
-
-	ngOnInit() {
-
-	}
 
 	showAddWindow(e: MouseEvent) {
 		this.needle = "";
