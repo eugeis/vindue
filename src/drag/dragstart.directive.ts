@@ -26,8 +26,8 @@ import { DragService } from './drag.service';
 	selector: '[dragStart]'
 })
 export class DragStart {
+	@Input("node") node: any;
 	@Input("dragStart") type: string;
-	@Input() node: any;
 	@Input("drop") dropEmitter: EventEmitter<void>;
 
 	constructor(private er: ElementRef, private dragService: DragService) {
@@ -35,11 +35,7 @@ export class DragStart {
 	}
 
 	@HostListener('dragstart') onDragStart() {
-		this.dragService.setDragInfo({
-			dropEmitter: this.dropEmitter,
-			node: this.node,
-			type: this.type
-		});
+		this.dragService.initDragging(this.dropEmitter, this.node, this.type);
 	}
 
 	@HostListener('dragend') onDragEnd() {

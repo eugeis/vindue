@@ -20,13 +20,13 @@
  */
 import { Injectable } from '@angular/core';
 
-import { DropInfo } from '../drag/dropinfo.model';
+import { DragInfo } from '../drag/draginfo.model';
 import { CardinalDirection } from '../drag/cardinaldirection.enum';
 import { NodeOrientation } from './nodeorientation.enum';
 
 import { NodeInterface } from './treenode.interface';
 
-export function insertPanel(d: DropInfo, orientation: NodeOrientation, branches: NodeInterface.TreeNode[]): void {
+export function insertPanel(d: DragInfo, orientation: NodeOrientation, branches: NodeInterface.TreeNode[]): void {
 	let i: number = branches.indexOf(d.target);
 	let dir: CardinalDirection = d.direction;
 

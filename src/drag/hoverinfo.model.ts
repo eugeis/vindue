@@ -20,9 +20,7 @@
  */
 import { CardinalDirection } from './cardinaldirection.enum';
 
-export class DropInfo {
+export class HoverInfo {
 	direction: CardinalDirection;
 	display: boolean;
-	source: any;
-	target: any;
 }

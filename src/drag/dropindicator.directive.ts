@@ -21,24 +21,24 @@
 import { Directive, Input, ElementRef } from '@angular/core';
 
 import { CardinalDirection } from  './cardinaldirection.enum';
-import { DropInfo } from './dropinfo.model';
+import { HoverInfo } from './hoverinfo.model';
 
 @Directive({ selector: '[dropIndicator]' })
 export class DropIndicator {
-	@Input() dropInfo: DropInfo;
-	oldDropInfo: DropInfo;
+	@Input() hoverInfo: HoverInfo;
+	oldHoverInfo: HoverInfo;
 
 	el: any;
 
 	constructor (er: ElementRef) {
 		this.el = er.nativeElement;
-		this.oldDropInfo = new DropInfo();
+		this.oldHoverInfo = new HoverInfo();
 	}
 
 	ngDoCheck() {
-		if (this.dropInfo) {
-			if (this.dropInfo.direction !== this.oldDropInfo.direction) {
-				switch(this.dropInfo.direction) {
+		if (this.hoverInfo) {
+			if (this.hoverInfo.direction !== this.oldHoverInfo.direction) {
+				switch(this.hoverInfo.direction) {
 					case CardinalDirection.Center:
 					this.el.style.width = "100%";
 					this.el.style.height = "100%";
@@ -85,7 +85,7 @@ export class DropIndicator {
 					default: break;
 				}
 
-				this.oldDropInfo.direction = this.dropInfo.direction;
+				this.oldHoverInfo.direction = this.hoverInfo.direction;
 			}
 		}
 	}

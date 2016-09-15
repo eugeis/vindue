@@ -20,11 +20,13 @@
  */
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 
+import { DragInfo } from '../drag/draginfo.model';
 import { DropZone } from '../drag/dropzone.directive';
 import { DropIndicator } from '../drag/dropindicator.directive';
-import { DropInfo } from '../drag/dropinfo.model';
+import { HoverInfo } from '../drag/hoverinfo.model';
 import { CardinalDirection } from '../drag/cardinaldirection.enum';
 import { Wrapper } from '../wrapper.model';
+import { DragService } from '../drag/drag.service';
 
 import { NodeInterface } from '../node/treenode.interface';
 import { Map } from '../tree/windowmapper.function';
@@ -54,8 +56,8 @@ interface OnPanelAction {
 		}
 	`],
 	template: `
-		<div class="ee-panel" [dropInfo]="dropInfo" (rearrange)="rearrange($event)" dropZone="'panel'">
-			<div class="ee-panel-hover" [dropInfo]="dropInfo" *ngIf="dropInfo.display" dropIndicator></div>
+		<div class="ee-panel" [hoverInfo]="hoverInfo" (dropping)="rearrange($event)" dropZone="'panel'">
+			<div class="ee-panel-hover" [hoverInfo]="hoverInfo" *ngIf="hoverInfo.display" dropIndicator></div>
 			<div class="ee-panel-data" *componentOutlet="html; context:self; selector:'ee-panel-data'">{{name}}</div>
 		</div>
 	`
@@ -68,16 +70,16 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 
 	@Input() map: Map.WindowMapper;
 
-	@Output("insert") insertEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
+	@Output("insert") insertEmitter: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
 	html: string;
 	self: PanelComponent = this;
 
-	dropInfo: DropInfo;
+	hoverInfo: HoverInfo;
 
-	constructor() {
-		this.dropInfo = new DropInfo();
+	constructor(dragService: DragService) {
+		this.hoverInfo = new HoverInfo();
 	}
 
 	ngOnInit() {
@@ -90,41 +92,8 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 		this.onEmitter.emit(e);
 	}
 
-	rearrange(node: NodeInterface.TreeNode) {
-		switch(this.dropInfo.direction) {
-			case CardinalDirection.Center:
-			this.dropInfo.direction = CardinalDirection.Center;
-			break;
-
-			case CardinalDirection.North:
-			case CardinalDirection.Northwestnorth:
-			case CardinalDirection.Northeastnorth:
-			this.dropInfo.direction = CardinalDirection.North;
-			break;
-
-			case CardinalDirection.South:
-			case CardinalDirection.Southwestsouth:
-			case CardinalDirection.Southeastsouth:
-			this.dropInfo.direction = CardinalDirection.South;
-			break;
-
-			case CardinalDirection.West:
-			case CardinalDirection.Westnorthwest:
-			case CardinalDirection.Westsouthwest:
-			this.dropInfo.direction = CardinalDirection.West;
-			break;
-
-			case CardinalDirection.East:
-			case CardinalDirection.Eastnortheast:
-			case CardinalDirection.Eastsoutheast:
-			this.dropInfo.direction = CardinalDirection.East;
-			break;
-
-			default: break;
-		}
-
-		this.dropInfo.source = node;
-		this.insertEmitter.emit(this.dropInfo);
+	rearrange(dragInfo: DragInfo) {
+		this.insertEmitter.emit(dragInfo);
 	}
 
 	ngOnDestroy() {

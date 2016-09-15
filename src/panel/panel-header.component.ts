@@ -20,7 +20,6 @@
  */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { DragStart } from '../drag/dragstart.directive';
 import { NodeInterface } from '../node/treenode.interface';
 
 @Component({

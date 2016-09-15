@@ -18,28 +18,29 @@
  *
  * @author Jonas Möller
  */
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
-import { DragInfo } from './draginfo.model';
+import { DragInfo, shallowCopyDragInfo } from './draginfo.model';
+import { CardinalDirection } from '../drag/cardinaldirection.enum';
 
 @Injectable()
 export class DragService {
 	private info: DragInfo;
 
-	setDragInfo(i: DragInfo): void {
-		this.info = i;
+	initDragging(dropEmitter: EventEmitter<void>, node: any, type: string): void {
+		this.info = {
+			source: node,
+			target: undefined,
+			type: type,
+			dropEmitter: dropEmitter,
+			direction: undefined
+		};
 	}
 
-	clear() {
-		this.info = undefined;
-	}
-
-	getNode() {
-		if (!this.info) {
-			throw "Tried 'getNode' while draginfo is not set.";
+	setDirection(dir: CardinalDirection) {
+		if (this.info) {
+			this.info.direction = dir;
 		}
-
-		return this.info.node;
 	}
 
 	emitDrop(): void {
@@ -54,7 +55,7 @@ export class DragService {
 		this.info.dropEmitter.emit();
 	}
 
-	hasDragObject(type: string): boolean {
+	isDragging(type: string): boolean {
 		if (!this.info) {
 			return false;
 		}
@@ -62,5 +63,11 @@ export class DragService {
 		return this.info.type === type;
 	}
 
-	constructor() { }
+	clear(): void {
+		this.info = undefined;
+	}
+
+	getInfo(): DragInfo {
+		return shallowCopyDragInfo(this.info);
+	}
 }

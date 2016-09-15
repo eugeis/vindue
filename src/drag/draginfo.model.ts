@@ -19,9 +19,22 @@
  * @author Jonas Möller
  */
 import { EventEmitter } from '@angular/core';
+import { CardinalDirection } from './cardinaldirection.enum';
 
 export interface DragInfo {
-	node: any,
-	dropEmitter: EventEmitter<void>,
-	type: string
+	source: any,
+	target: any,
+	type: string,
+	direction: CardinalDirection,
+	dropEmitter: EventEmitter<void>
+}
+
+export function shallowCopyDragInfo(n: DragInfo) {
+	return {
+		source: n.source,
+		target: n.target,
+		type: n.type,
+		dropEmitter: n.dropEmitter,
+		direction: n.direction
+	}
 }

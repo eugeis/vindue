@@ -20,7 +20,7 @@
  */
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
-import { DropInfo } from '../drag/dropinfo.model';
+import { DragInfo, shallowCopyDragInfo } from '../drag/draginfo.model';
 import { NodeOrientation, inv, getClass } from './nodeorientation.enum';
 import { SeparatorComponent } from './separator.component';
 import { CardinalDirection } from '../drag/cardinaldirection.enum';
@@ -109,7 +109,7 @@ export class NodeComponent implements OnInit {
 
 	@Input() sharedData;
 
-	@Output("insertPanel") insertEmitter: EventEmitter<DropInfo> = new EventEmitter<DropInfo>();
+	@Output("insertPanel") insertEmitter: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 	@Output("promotePanel") promoteEmitter: EventEmitter<NodeInterface.TreeNode> = new EventEmitter<NodeInterface.TreeNode>();
 	@Output("closePanel") closeEmitter: EventEmitter<NodeInterface.TreeNode> = new EventEmitter<NodeInterface.TreeNode>();
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
@@ -138,17 +138,17 @@ export class NodeComponent implements OnInit {
 		return inv(orientation);
 	}
 
-	insert(dropInfo: DropInfo): void {
-		dropInfo.target = this.node;
-		if (dropInfo.target !== dropInfo.source) {
-			dropInfo.source = NodeInterface.cloneNodeShallow(dropInfo.source);
+	insert(dragInfo: DragInfo): void {
+		dragInfo.target = this.node;
+		if (dragInfo.target !== dragInfo.source) {
+			dragInfo.source = NodeInterface.cloneNodeShallow(dragInfo.source);
 
-			this.insertEmitter.emit(dropInfo);
+			this.insertEmitter.emit(dragInfo);
 		}
 	}
 
-	insertPanel(dropInfo: DropInfo) {
-		NodeFunctions.insertPanel(dropInfo, this.orientation, this.node.branches);
+	insertPanel(dragInfo: DragInfo) {
+		NodeFunctions.insertPanel(dragInfo, this.orientation, this.node.branches);
 	}
 
 	closePanel(): void {
