@@ -60,11 +60,10 @@ export class DropZone {
 
 	@HostListener('drop', ['$event']) onDrop(e) {
 		this.hoverInfo.display = false;
-		this.dragService.setDirection(this.hoverInfo.direction);
+		this.dragService.setDirection(
+			DragFunctions.convertCardinalDirection(this.hoverInfo.direction)
+		);
 		this.dropEmitter.emit(this.dragService.getInfo());
-
-		//TODO: Only close, when promise is received
-		this.dragService.emitDrop();
 		this.dragService.clear();
 	}
 }

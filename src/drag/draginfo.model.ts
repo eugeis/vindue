@@ -18,15 +18,18 @@
  *
  * @author Jonas Möller
  */
-import { EventEmitter } from '@angular/core';
 import { CardinalDirection } from './cardinaldirection.enum';
+
+interface VoidFunction {
+	(): void;
+}
 
 export interface DragInfo {
 	source: any,
 	target: any,
 	type: string,
 	direction: CardinalDirection,
-	dropEmitter: EventEmitter<void>
+	closeOrigin: VoidFunction
 }
 
 export function shallowCopyDragInfo(n: DragInfo) {
@@ -34,7 +37,7 @@ export function shallowCopyDragInfo(n: DragInfo) {
 		source: n.source,
 		target: n.target,
 		type: n.type,
-		dropEmitter: n.dropEmitter,
-		direction: n.direction
+		direction: n.direction,
+		closeOrigin: n.closeOrigin
 	}
 }

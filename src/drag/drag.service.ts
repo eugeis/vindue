@@ -27,13 +27,18 @@ import { CardinalDirection } from '../drag/cardinaldirection.enum';
 export class DragService {
 	private info: DragInfo;
 
-	initDragging(dropEmitter: EventEmitter<void>, node: any, type: string): void {
+	initDragging(node: any, type: string, closeEmitter: EventEmitter<void>): void {
 		this.info = {
 			source: node,
 			target: undefined,
 			type: type,
-			dropEmitter: dropEmitter,
-			direction: undefined
+			direction: undefined,
+			closeOrigin: function() {
+				if (closeEmitter) {
+					closeEmitter.emit();					
+				}
+				closeEmitter = null;
+			}
 		};
 	}
 
@@ -41,18 +46,6 @@ export class DragService {
 		if (this.info) {
 			this.info.direction = dir;
 		}
-	}
-
-	emitDrop(): void {
-		if (!this.info) {
-			throw "Tried 'close' while draginfo is not set.";
-		}
-
-		if (!this.info.dropEmitter) {
-			return;
-		}
-
-		this.info.dropEmitter.emit();
 	}
 
 	isDragging(type: string): boolean {
@@ -64,6 +57,7 @@ export class DragService {
 	}
 
 	clear(): void {
+		this.info.closeOrigin = null;
 		this.info = undefined;
 	}
 

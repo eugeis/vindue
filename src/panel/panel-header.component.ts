@@ -66,7 +66,7 @@ import { NodeInterface } from '../node/treenode.interface';
 		}
 	`],
 	template: `
-		<div class="ee-panel-header" [drop]="closeEmitter" [node]="node" dragStart="'panel'">
+		<div class="ee-panel-header" [closeEmitter]="closeEmitter" [node]="node" dragStart="'panel'">
 			<div class="ee-panel-header-heading">
 				<span [hidden]="changeName" (click)="toggleName()">{{node?.name}}</span>
 				<form [hidden]="!changeName" (ngSubmit)="toggleName()">

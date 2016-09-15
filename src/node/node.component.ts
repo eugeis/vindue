@@ -141,14 +141,13 @@ export class NodeComponent implements OnInit {
 	insert(dragInfo: DragInfo): void {
 		dragInfo.target = this.node;
 		if (dragInfo.target !== dragInfo.source) {
-			dragInfo.source = NodeInterface.cloneNodeShallow(dragInfo.source);
-
 			this.insertEmitter.emit(dragInfo);
 		}
 	}
 
 	insertPanel(dragInfo: DragInfo) {
 		NodeFunctions.insertPanel(dragInfo, this.orientation, this.node.branches);
+		dragInfo.closeOrigin();
 	}
 
 	closePanel(): void {

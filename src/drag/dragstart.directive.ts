@@ -28,14 +28,14 @@ import { DragService } from './drag.service';
 export class DragStart {
 	@Input("node") node: any;
 	@Input("dragStart") type: string;
-	@Input("drop") dropEmitter: EventEmitter<void>;
+	@Input("closeEmitter") closeEmitter: EventEmitter<void>;
 
 	constructor(private er: ElementRef, private dragService: DragService) {
 		er.nativeElement.draggable = true;
 	}
 
 	@HostListener('dragstart') onDragStart() {
-		this.dragService.initDragging(this.dropEmitter, this.node, this.type);
+		this.dragService.initDragging(this.node, this.type, this.closeEmitter);
 	}
 
 	@HostListener('dragend') onDragEnd() {

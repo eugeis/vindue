@@ -4,6 +4,7 @@
 	"description": "A windowmanager in angular2",
 	"main": "index.js",
 	"scripts": {
+		"prepublish": "npm test",
 		"tsc": "tsc",
 		"test": "npm run tsc && karma start karma.conf.js"
 	},
