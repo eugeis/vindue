@@ -6,21 +6,30 @@ import * as NodeFunctions from './node.functions';
 
 import { NodeInterface } from './treenode.interface';
 
-describe('test dropping into vertical panels', () => {
-	it('when dropping west', () => {
-		const leftWindow: NodeInterface.TreeNode = { branches: [], name: "leftWindow" };
-		const rightWindow: NodeInterface.TreeNode = { branches: [], name: "rightWindow" };
+describe('Dropping into vertical panels', () => {
+	const leftWindow: NodeInterface.TreeNode = { branches: [], name: "leftWindow" };
+	const rightWindow: NodeInterface.TreeNode = { branches: [], name: "rightWindow" };
 
-		let branches: NodeInterface.TreeNode[] = [ leftWindow, rightWindow ];
+	let branches: NodeInterface.TreeNode[];
+	let orientation: NodeOrientation;
 
-		let dragInfo: DragInfo = {
-			source: rightWindow,
-			target: leftWindow,
-			type: "",
-			direction: CardinalDirection.West,
-			closeOrigin: undefined
-		};
-		let orientation: NodeOrientation = NodeOrientation.Vertical;
+	let dragInfo: DragInfo = {
+		source: undefined,
+		target: undefined,
+		type: undefined,
+		direction: undefined,
+		closeOrigin: undefined
+	};
+
+	beforeEach(() => {
+		branches = [ leftWindow, rightWindow ];
+		orientation = NodeOrientation.Vertical;
+	});
+
+	it('inserts the panel left (west-insertion)', () => {
+		dragInfo.source = rightWindow;
+		dragInfo.target = leftWindow;
+		dragInfo.direction = CardinalDirection.West;
 
 		NodeFunctions.insertPanel(dragInfo, orientation, branches);
 
@@ -38,20 +47,10 @@ describe('test dropping into vertical panels', () => {
 		expect(branches.length).toBe(2);
 	});
 
-	it('when dropping east', () => {
-		const leftWindow: NodeInterface.TreeNode = { branches: [], name: "leftWindow" };
-		const rightWindow: NodeInterface.TreeNode = { branches: [], name: "rightWindow" };
-
-		let branches: NodeInterface.TreeNode[] = [ leftWindow, rightWindow ];
-
-		let dragInfo: DragInfo = {
-			source: leftWindow,
-			target: rightWindow,
-			type: "",
-			direction: CardinalDirection.East,
-			closeOrigin: undefined
-		};
-		let orientation: NodeOrientation = NodeOrientation.Vertical;
+	it('inserts the panel right (east-insertion)', () => {
+		dragInfo.source = leftWindow;
+		dragInfo.target = rightWindow;
+		dragInfo.direction = CardinalDirection.East;
 
 		NodeFunctions.insertPanel(dragInfo, orientation, branches);
 
@@ -69,20 +68,10 @@ describe('test dropping into vertical panels', () => {
 		expect(branches.length).toBe(2);
 	});
 
-	it('when dropping north', () => {
-		const leftWindow: NodeInterface.TreeNode = { branches: [], name: "leftWindow" };
-		const rightWindow: NodeInterface.TreeNode = { branches: [], name: "rightWindow" };
-
-		let branches: NodeInterface.TreeNode[] = [ leftWindow, rightWindow ];
-
-		let dragInfo: DragInfo = {
-			source: leftWindow,
-			target: rightWindow,
-			type: "",
-			direction: CardinalDirection.North,
-			closeOrigin: undefined
-		};
-		let orientation: NodeOrientation = NodeOrientation.Vertical;
+	it('inserts the panel above (north-insertion)', () => {
+		dragInfo.source = leftWindow;
+		dragInfo.target = rightWindow;
+		dragInfo.direction = CardinalDirection.North;
 
 		NodeFunctions.insertPanel(dragInfo, orientation, branches);
 
@@ -100,20 +89,10 @@ describe('test dropping into vertical panels', () => {
 		expect(branches.length).toBe(1);
 	});
 
-	it('when dropping south', () => {
-		const leftWindow: NodeInterface.TreeNode = { branches: [], name: "leftWindow" };
-		const rightWindow: NodeInterface.TreeNode = { branches: [], name: "rightWindow" };
-
-		let branches: NodeInterface.TreeNode[] = [ leftWindow, rightWindow ];
-
-		let dragInfo: DragInfo = {
-			source: leftWindow,
-			target: rightWindow,
-			type: "",
-			direction: CardinalDirection.South,
-			closeOrigin: undefined
-		};
-		let orientation: NodeOrientation = NodeOrientation.Vertical;
+	it('inserts the panel below (south-insertion)', () => {
+		dragInfo.source = leftWindow;
+		dragInfo.target = rightWindow;
+		dragInfo.direction = CardinalDirection.South;
 
 		NodeFunctions.insertPanel(dragInfo, orientation, branches);
 
