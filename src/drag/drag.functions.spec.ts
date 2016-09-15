@@ -1,4 +1,4 @@
-import { CardinalDirection } from '../drag/cardinaldirection.enum';
+import { CardinalDirection } from './cardinaldirection.enum';
 
 import * as DragFunctions from './drag.functions';
 
@@ -60,14 +60,14 @@ describe('Getting CardinalDirection', () => {
 			[27.5,9],[31,9],[36,9]
 		],
 		eastsoutheast: [
-			[27,27],[31,27],[34,26.5],
-			[27,32],[31,30.5]       ,
-			[27,34.5]
+			[27.1,27],[31,27],[35,27],
+			        [31.1,31],[35,31],
+			                [35.1,35],
 		],
 		southeastsouth: [
-			                [35.5,27],
-			       ,[31.5,32],[36,32],
-			[27.5,36],[31,36],[36,36]
+			[27,27.1]                 ,
+			[27,31],[31,31.1]        ,
+			[27,35],[31,35],[35,35.1]
 		],
 		center: [
 			[11,11],[18,11],[26,11],
@@ -136,9 +136,56 @@ describe('Getting CardinalDirection', () => {
 		})
 	});
 
+	it('should recognize southeastsouth-hovering', () => {
+		testSet.southeastsouth.forEach((d) => {
+			expect(DragFunctions.getCardinalDirection(d[0], d[1], width, height)).toBe(CardinalDirection.Southeastsouth);
+		})
+	});
+
+	it('should recognize eastsoutheast-hovering', () => {
+		testSet.eastsoutheast.forEach((d) => {
+			expect(DragFunctions.getCardinalDirection(d[0], d[1], width, height)).toBe(CardinalDirection.Eastsoutheast);
+		})
+	});
+
 	it('should recognize center-hovering', () => {
 		testSet.center.forEach((d) => {
 			expect(DragFunctions.getCardinalDirection(d[0], d[1], width, height)).toBe(CardinalDirection.Center);
 		})
+	});
+});
+
+
+describe('Converting CardinalDirection', () => {
+	it('yields north', () => {
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.North)).toBe(CardinalDirection.North);
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Northwestnorth)).toBe(CardinalDirection.North);
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Northeastnorth)).toBe(CardinalDirection.North);
+	});
+
+	it('yields south', () => {
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.South)).toBe(CardinalDirection.South);
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Southwestsouth)).toBe(CardinalDirection.South);
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Southeastsouth)).toBe(CardinalDirection.South);
+	});
+
+	it('yields east', () => {
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.East)).toBe(CardinalDirection.East);
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Eastnortheast)).toBe(CardinalDirection.East);
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Eastsoutheast)).toBe(CardinalDirection.East);
+	});
+
+	it('yields west', () => {
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.West)).toBe(CardinalDirection.West);
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Westnorthwest)).toBe(CardinalDirection.West);
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Westsouthwest)).toBe(CardinalDirection.West);
+	});
+
+	it('yields center', () => {
+		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Center)).toBe(CardinalDirection.Center);
+	});
+
+	it('fails', () => {
+		expect(DragFunctions.convertCardinalDirection).toThrow("Unknown direction");
 	});
 });
