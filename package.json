@@ -4,6 +4,8 @@
 	"description": "A windowmanager in angular2",
 	"main": "index.js",
 	"scripts": {
+		"clean": "read -p 'Are you sure you want to delete all .js and .map.js in src/? ' yn && gvfs-trash src/**/*.js & gvfs-trash src/**/*.js.map & gvfs-trash src/*.js & gvfs-trash src/*.js.map",
+		"dev": "lite-server",
 		"prepublish": "npm test",
 		"tsc": "tsc",
 		"test": "npm run tsc && karma start karma.conf.js"
@@ -30,7 +32,9 @@
 		"karma": "1.2.0",
 		"karma-chrome-launcher": "^2.0.0",
 		"karma-cli": "^1.0.1",
+		"karma-html-reporter": "^0.2.7",
 		"karma-jasmine": "^1.0.2",
+		"lite-server": "^2.2.2",
 		"systemjs": "^0.19.37",
 		"typescript": "^1.8.10"
 	}

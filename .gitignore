@@ -2,6 +2,8 @@
 **/*.js
 **/*.js.map
 
+karma_html/
+
 !systemjs.config.js
 !karma-test-shim.js
 !karma.conf.js

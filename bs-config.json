@@ -1,0 +1,5 @@
+{
+	"port": 8000,
+	"files": ["./karma_html/summary/*.{html,htm,css,js}"],
+	"server": { "baseDir": "./karma_html/summary" }
+}

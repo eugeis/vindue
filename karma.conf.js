@@ -39,7 +39,13 @@ module.exports = function (config) {
 			{ pattern: 'src/**/*.ts', included: false, watched: false },
 		],
 
-		reporters: ['progress'],
+		htmlReporter: {
+			outputDir: 'karma_html', // where to put the reports
+			reportName: 'summary', // report summary filename; browser info by default
+		},
+
+		reporters: ['progress', 'html'],
+		plugins: ['karma-jasmine', 'karma-html-reporter', 'karma-chrome-launcher'],
 		port: 9876,
 		colors: true,
 		logLevel: config.LOG_INFO,
