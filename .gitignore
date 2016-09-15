@@ -3,6 +3,9 @@
 **/*.js.map
 
 !systemjs.config.js
+!karma-test-shim.js
+!karma.conf.js
+
 *.tgz
 
 # Logs

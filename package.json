@@ -1,10 +1,11 @@
 {
 	"name": "vindue",
-	"version": "0.0.12",
+	"version": "0.1.0",
 	"description": "A windowmanager in angular2",
 	"main": "index.js",
 	"scripts": {
-		"tsc": "tsc"
+		"tsc": "tsc",
+		"test": "npm run tsc && karma start karma.conf.js"
 	},
 	"author": "Jonas Möller",
 	"repository": {
@@ -24,6 +25,12 @@
 		"zone.js": "^0.6.21"
 	},
 	"devDependencies": {
-		"typescript": "^1.8.10"
+		"typescript": "^1.8.10",
+		"jasmine": "^2.5.0",
+		"karma": "1.2.0",
+		"karma-chrome-launcher": "^2.0.0",
+		"karma-cli": "^1.0.1",
+		"karma-jasmine": "^1.0.2",
+		"systemjs": "^0.19.37"
 	}
 }
