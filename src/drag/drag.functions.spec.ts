@@ -68,7 +68,12 @@ describe('Getting CardinalDirection', () => {
 			                [35.5,27],
 			       ,[31.5,32],[36,32],
 			[27.5,36],[31,36],[36,36]
-		]
+		],
+		center: [
+			[11,11],[18,11],[26,11],
+			[11,15],[18,15],[26,15],
+			[11,19],[18,19],[26,19]
+		],
 	}
 
 	it('should recognize north-hovering', () => {
@@ -128,6 +133,12 @@ describe('Getting CardinalDirection', () => {
 	it('should recognize eastnortheast-hovering', () => {
 		testSet.eastnortheast.forEach((d) => {
 			expect(DragFunctions.getCardinalDirection(d[0], d[1], width, height)).toBe(CardinalDirection.Eastnortheast);
+		})
+	});
+
+	it('should recognize center-hovering', () => {
+		testSet.center.forEach((d) => {
+			expect(DragFunctions.getCardinalDirection(d[0], d[1], width, height)).toBe(CardinalDirection.Center);
 		})
 	});
 });
