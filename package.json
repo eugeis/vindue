@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"clean": "find src/ -name '*.js.map' -delete & find src/ -name '*.js' -delete",
-		"dev": "lite-server",
+		"dev": "lite-server -c bs-config.json",
 		"prepublish": "npm test",
 		"tsc": "tsc",
 		"test": "npm run tsc && karma start karma.conf.js"
@@ -32,6 +32,7 @@
 		"karma": "1.2.0",
 		"karma-chrome-launcher": "^2.0.0",
 		"karma-cli": "^1.0.1",
+		"karma-coverage": "^1.1.1",
 		"karma-html-reporter": "^0.2.7",
 		"karma-jasmine": "^1.0.2",
 		"lite-server": "^2.2.2",

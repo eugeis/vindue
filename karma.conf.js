@@ -44,8 +44,18 @@ module.exports = function (config) {
 			reportName: 'summary', // report summary filename; browser info by default
 		},
 
-		reporters: ['progress', 'html'],
-		plugins: ['karma-jasmine', 'karma-html-reporter', 'karma-chrome-launcher'],
+		preprocessors: {
+			'src/**/*.js': ['coverage']
+		},
+
+		coverageReporter: {
+			type: 'html',
+			dir: 'karma_html/',
+			subdir : 'coverage'
+		},
+
+		reporters: ['progress', 'html', 'coverage'],
+		plugins: ['karma-jasmine', 'karma-html-reporter', 'karma-chrome-launcher', 'karma-coverage'],
 		port: 9876,
 		colors: true,
 		logLevel: config.LOG_INFO,
