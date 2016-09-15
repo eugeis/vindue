@@ -4,7 +4,7 @@
 	"description": "A windowmanager in angular2",
 	"main": "index.js",
 	"scripts": {
-		"clean": "read -p 'Are you sure you want to delete all .js and .map.js in src/? ' yn && gvfs-trash src/**/*.js & gvfs-trash src/**/*.js.map & gvfs-trash src/*.js & gvfs-trash src/*.js.map",
+		"clean": "find src/ -name '*.js.map' -delete & find src/ -name '*.js' -delete",
 		"dev": "lite-server",
 		"prepublish": "npm test",
 		"tsc": "tsc",
