@@ -19,9 +19,17 @@
  * @author Jonas Möller
  */
 export enum CardinalDirection {
-	North, West, East, South, Center,
-	Northwestnorth, Northeastnorth,
-	Westnorthwest, Westsouthwest,
-	Eastnortheast, Eastsoutheast,
-	Southwestsouth, Southeastsouth
+	North = 0,
+	Northeastnorth = 1,
+	Eastnortheast = 2,
+	East = 3,
+	Eastsoutheast = 4,
+	Southeastsouth = 5,
+	South = 6,
+	Southwestsouth = 7,
+	Westsouthwest = 8,
+	West = 9,
+	Westnorthwest = 10,
+	Northwestnorth = 11,
+	Center = 20,
 }
