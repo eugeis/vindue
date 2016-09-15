@@ -29,13 +29,23 @@ import { NodeInterface } from './treenode.interface';
 export function insertPanel(d: DragInfo, orientation: NodeOrientation, branches: NodeInterface.TreeNode[]): void {
 	let i: number = branches.indexOf(d.target);
 	let dir: CardinalDirection = d.direction;
+	let source: NodeInterface.TreeNode = NodeInterface.cloneNodeShallow(d.source);
+
+	if (i < 0) {
+		throw "Target was not found in branches";
+	}
+
+	if (dir != CardinalDirection.North && dir != CardinalDirection.West
+	&& dir != CardinalDirection.East && dir != CardinalDirection.South) {
+		throw "Unknown cardinal direction (must be n,w,s,e)"
+	}
 
 	if (dir === CardinalDirection.North && orientation === NodeOrientation.Horizontal
 	 || dir === CardinalDirection.West && orientation === NodeOrientation.Vertical) {
-		branches.splice(i, 0, d.source);
+		branches.splice(i, 0, source);
 	} else if (dir === CardinalDirection.South && orientation === NodeOrientation.Horizontal
 	 || dir === CardinalDirection.East && orientation === NodeOrientation.Vertical) {
-		branches.splice(i+1, 0, d.source);
+		branches.splice(i+1, 0, source);
 	} else {
 		let n: NodeInterface.TreeNode = {
 			branches: []
@@ -44,9 +54,9 @@ export function insertPanel(d: DragInfo, orientation: NodeOrientation, branches:
 		let removed: NodeInterface.TreeNode = branches.splice(i, 1, n)[0];
 
 		if (dir === CardinalDirection.North || dir === CardinalDirection.West) {
-			n.branches = [d.source, removed];
+			n.branches = [source, removed];
 		} else {
-			n.branches = [removed, d.source];
+			n.branches = [removed, source];
 		}
 	}
 }
