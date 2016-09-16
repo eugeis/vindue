@@ -42,12 +42,13 @@ import { LimitPipe } from './pipes/limit.pipe';
 /* TreeElements */
 import { TreeComponent } from './tree/tree.component';
 import { TreeHeaderComponent } from './tree/tree-header.component';
+import { DashboardComponent } from './tree/dashboard.component';
 
 @NgModule({
 	imports: [CommonModule, FormsModule, DragModule],
 	declarations: [TreeComponent, TreeHeaderComponent, PanelHeaderComponent,
 		PanelComponent, NodeComponent, SeparatorComponent,
-		StringFilterPipe, LimitPipe, ComponentOutlet],
+		StringFilterPipe, LimitPipe, ComponentOutlet, DashboardComponent],
 	exports: [TreeComponent],
 	providers: []
 })
