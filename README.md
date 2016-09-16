@@ -1,8 +1,6 @@
 # vindue
 Angular2-based window manager for websites
 
-Working plunker: http://plnkr.co/edit/Gzelunl6rtApiTt7AUYn?p=preview
-
 [Documentation](https://github.com/j-moeller/vindue/blob/master/DOCUMENTATION.md)
 
 ## Getting started
