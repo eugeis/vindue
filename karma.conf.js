@@ -37,6 +37,8 @@ module.exports = function (config) {
 
 			// paths to support debugging with source maps in dev tools
 			{ pattern: 'src/**/*.ts', included: false, watched: false },
+
+			{ pattern: 'node_modules/angular2-component-outlet/**/*.js', included: false, watched: true },
 		],
 
 		htmlReporter: {
@@ -61,6 +63,6 @@ module.exports = function (config) {
 		logLevel: config.LOG_INFO,
 		autoWatch: true,
 		browsers: ['Chromium'],
-		singleRun: true
+		singleRun: false
 	})
 }
