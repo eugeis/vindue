@@ -84,7 +84,13 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 
 	ngOnInit() {
 		if (this.window && this.map) {
-			this.html = this.map.callback(this.window);
+			try {
+				this.html = this.map.callback(this.window);
+			} catch(e) {
+				console.warn("Exception for: " + this.window);
+				console.warn(e);
+				this.html = "";
+			}
 		}
 	}
 
