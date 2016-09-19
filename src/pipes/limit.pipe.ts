@@ -24,12 +24,20 @@ import { Pipe } from '@angular/core';
 	name: 'LimitPipe'
 })
 export class LimitPipe {
+	transform(input: string[], limit: number) {
+		if (!input) {
+			throw "input must not be undefined";
+		}
+		let copy = input.slice(0);
 
-	transform(haystack: string[], limit: number) {
-		if (!limit || limit < 0) {
-			limit = 0;
+		if (limit === 0) {
+			return [];
 		}
 
-		return haystack.splice(0, limit);
+		if (!limit || limit < 0 || limit > copy.length) {
+			return copy;
+		}
+
+		return copy.slice(0, limit);
 	}
 }

@@ -26,6 +26,15 @@ import { Pipe } from '@angular/core';
 export class StringFilterPipe {
 
 	transform(haystack: string[], needle: string) {
+		if (!haystack) {
+			throw "haystack must not be undefined";
+		}
+		haystack = haystack.slice(0);
+
+		if (!needle) {
+			return haystack;
+		}
+
 		needle = needle.toLowerCase();
 		return haystack.filter(h => {
 			return h.toLowerCase().includes(needle);
