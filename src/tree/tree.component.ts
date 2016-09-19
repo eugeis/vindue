@@ -91,7 +91,7 @@ export interface Tree extends NodeInterface.TreeNode {
 				(on)="onPanelAction($event)">
 			</ee-node>
 		</div>
-		<div class="dashboard-curtain" [hidden]="tree.branches.length > 0 && !dashboard">
+		<div class="dashboard-curtain" *ngIf="tree.branches.length == 0 || dashboard">
 			<ee-dashboard
 				[windows]="windows"
 				(add)="add($event)"
@@ -120,7 +120,10 @@ export class TreeComponent {
 
 	showDashboard(e: MouseEvent) {
 		this.dashboard = true;
-		e.stopPropagation();
+
+		if (e) {
+			e.stopPropagation();
+		}
 	}
 
 	hideDashboard() {
