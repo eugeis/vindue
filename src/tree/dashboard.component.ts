@@ -95,7 +95,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 				<input type="text" [(ngModel)]="needle" placeholder="Type in the view you want to open..." tabindex="1" autofocus>
 				<div class="dashboard-gallery">
 					<ul>
-						<li *ngFor="let v of windows | LimitPipe:20 | StringFilterPipe:needle; let i = index" (click)="add(v)">
+						<li *ngFor="let v of windows | LimitPipe:limit | StringFilterPipe:needle; let i = index" (click)="add(v)">
 							<a class="btn btn-default" [attr.tabindex]="i+1" (keydown)="keyDown($event, v)">{{v}}</a>
 						</li>
 					</ul>
@@ -106,15 +106,16 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class DashboardComponent {
-	@Input() windows: string[];
+	@Input() windows: string[] = [];
 
 	@Output("add") addEmitter: EventEmitter<string> = new EventEmitter<string>();
 	@Output("hide") hideEmitter: EventEmitter<void> = new EventEmitter<void>();
 
+	limit: number = 20;
 	needle: string = "";
 
 	add(view: string) {
-		this.addEmitter.emit(view);		
+		this.addEmitter.emit(view);
 	}
 
 	keyDown(e: KeyboardEvent, view: string) {
