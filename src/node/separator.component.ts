@@ -21,6 +21,8 @@
 import { Component, Input, ElementRef, HostListener, OnInit } from '@angular/core';
 
 import { NodeOrientation, getClass } from './nodeorientation.enum';
+import { NodeInterface } from './treenode.interface';
+import { SeparatorInterface }  from './separator.functions';
 
 @Component({
 	selector: 'ee-separator',
@@ -50,88 +52,44 @@ import { NodeOrientation, getClass } from './nodeorientation.enum';
 
 export class SeparatorComponent implements OnInit {
 	@Input() orientation: NodeOrientation;
-	@Input() left: any;
-	@Input() right: any;
+	@Input() left: NodeInterface.TreeNode;
+	@Input() right: NodeInterface.TreeNode;
 
-	prevEl: any;
-	nextEl: any;
-
-	pos: number[];
+	dimensions: SeparatorInterface.ElementDimension;
+	cursorStart: [number, number];
 
 	@HostListener('dragstart', ['$event']) onDragStart(e: MouseEvent) {
-		this.pos = [e.clientX, e.clientY];
+		let prev = this.er.nativeElement.parentElement;
+		let next = prev.nextElementSibling;
+
+		this.dimensions.prevEl = [prev.clientWidth, prev.clientHeight];
+		this.dimensions.nextEl = [next.clientWidth, next.clientHeight];
+
+		this.cursorStart = [e.clientX, e.clientY];
+		e.stopPropagation();
 	}
 
-	@HostListener('drag', ['$event']) onDrag(e: MouseEvent) {
-		if (e.clientX != 0 && e.clientY != 0) {
-			let ratio = 0.5;
+	@HostListener('dragend', ['$event']) onDragEnd(e: MouseEvent) {
+		let size: SeparatorInterface.ElementSize = {
+			prevEl: this.left.size,
+			nextEl: this.right.size
+		};
 
-			switch (this.orientation) {
-				case NodeOrientation.Horizontal:
-					ratio = this.calcHor(e);
-					break;
-				case NodeOrientation. Vertical:
-					ratio = this.calcVert(e);
-					break;
-				default:
-				throw "Unknown NodeOrientation";
-			}
+		let sizes = SeparatorInterface.calcEndposition(this.orientation, {
+			start: this.cursorStart,
+			end: [e.clientX, e.clientY]
+		}, this.dimensions, size);
 
-			let sum = this.left.size + this.right.size;
-
-			if (0 <= ratio && ratio <= 1) {
-				this.left.size = sum * (1 - ratio);
-				this.right.size = sum * ratio;
-			}
-		}
-	}
-
-	calcVert(e: MouseEvent): number {
-		let y = this.pos[1]
-		let c = y - e.clientY;
-
-		let leftSize: number;
-		let rightSize: number;
-
-		if (c >= 0) {
-			leftSize = this.prevEl.offsetHeight + c;
-			rightSize = this.nextEl.offsetHeight - c;
-		} else {
-			leftSize = this.prevEl.offsetHeight + c;
-			rightSize = this.nextEl.offsetHeight - c;
-		}
-
-		return leftSize / (leftSize + rightSize);
-	}
-
-	calcHor(e: MouseEvent): number {
-		let x = this.pos[0]
-		let c = x - e.clientX;
-
-		let leftSize: number;
-		let rightSize: number;
-
-		if (c >= 0) {
-			leftSize = this.prevEl.offsetWidth + c;
-			rightSize = this.nextEl.offsetWidth - c;
-		} else {
-			leftSize = this.prevEl.offsetWidth + c;
-			rightSize = this.nextEl.offsetWidth - c;
-		}
-
-		return leftSize / (leftSize + rightSize);
-	}
-
-	@HostListener('dragend') onDragEnd() {
-	}
-
-	ngOnInit() {
-		this.prevEl = this.er.nativeElement.parentElement;
-		this.nextEl = this.prevEl.nextElementSibling;
+		this.left.size = sizes[0];
+		this.right.size = sizes[1];
 	}
 
 	sepClass(orientation: NodeOrientation) {
 		return getClass(orientation);
+	}
+
+	ngOnInit() {
+		this.dimensions = new SeparatorInterface.ElementDimension();
 	}
 
 	constructor(private er: ElementRef) {
