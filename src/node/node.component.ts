@@ -115,9 +115,7 @@ export class NodeComponent implements OnInit {
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
 	ngOnInit() {
-		this.node.branches.forEach(function(d) {
-			d.size = d.size || 1;
-		});
+		this.node.size = this.node.size || 1;
 
 		if (!this.node.branches || this.node.branches.length == 0) {
 			if (!this.node.model) {
@@ -146,6 +144,10 @@ export class NodeComponent implements OnInit {
 	}
 
 	insertPanel(dragInfo: DragInfo) {
+		if (dragInfo.direction === CardinalDirection.Center) {
+			dragInfo.direction = CardinalDirection.North;
+		}
+
 		NodeFunctions.insertPanel(dragInfo, this.orientation, this.node.branches);
 		dragInfo.closeOrigin();
 	}
