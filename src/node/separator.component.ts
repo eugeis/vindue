@@ -32,14 +32,14 @@ import { NodeOrientation, getClass } from './nodeorientation.enum';
 		}
 
 		.ee-separator.hor {
-			padding-top:1px;
-			padding-bottom:1px;
+			padding-top:2px;
+			padding-bottom:2px;
 			cursor: ns-resize;
 		}
 
 		.ee-separator.vert {
-			padding-left:1px;
-			padding-right:1px;
+			padding-left:2px;
+			padding-right:2px;
 			cursor: ew-resize;
 		}
 	`],

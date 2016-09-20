@@ -31,6 +31,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 			top: 0px;
 			left: 0px;
 			pointer-events: none;
+			z-index: 500;
 		}
 
 		.dashboard .closer span {

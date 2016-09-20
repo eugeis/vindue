@@ -34,6 +34,10 @@ import { NodeInterface } from '../node/treenode.interface';
 			font-weight: 500;
 			padding: 8px;
 			margin-left: 5px;
+			position: absolute;
+			z-index: 50;
+			top: 0;
+			left 0;
 		}
 
 		.ee-panel-header-space {
@@ -51,6 +55,9 @@ import { NodeInterface } from '../node/treenode.interface';
 		.ee-icon {
 			flex: 0 !important;
 			padding: 4px;
+			background: #f5f5f5;
+			position: relative;
+			z-index: 100;
 		}
 
 		.ee-icon span {
