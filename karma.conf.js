@@ -47,7 +47,7 @@ module.exports = function (config) {
 		},
 
 		preprocessors: {
-			'src/**/*.js': ['coverage']
+			'src/**/!(*spec|*mock).js': ['coverage']
 		},
 
 		coverageReporter: {
