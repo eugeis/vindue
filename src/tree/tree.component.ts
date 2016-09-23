@@ -104,9 +104,9 @@ export interface Tree extends NodeInterface.TreeNode {
 export class TreeComponent {
 	@Input() windows: string[] = [];
 	@Input() map: Map.WindowMapper = {
-		callback: function(d: any): string {
-			return "";
-		}
+		viewToHtml: (d:string) => { return "" },
+		viewToInputElement: (d:string) => { return [] },
+		viewToOutputElement: (d:string) => { return [] }
 	}
 	@Input() sharedData = {};
 	@Input() tree: Tree = {

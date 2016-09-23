@@ -54,12 +54,24 @@ interface OnPanelAction {
 			z-index: 100;
 			pointer-events: none;
 		}
+		ee-pin-indicator {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			flex: 0;
+			pointer-events: none;
+		}
 	`],
 	template: `
 		<div class="ee-panel" [hoverInfo]="hoverInfo" (dropping)="rearrange($event)" dropZone="'panel'">
 			<div class="ee-panel-hover" [hoverInfo]="hoverInfo" *ngIf="hoverInfo.display" dropIndicator></div>
 			<div class="ee-panel-data" *componentOutlet="html; context:self; selector:'ee-panel-data'">{{name}}</div>
 		</div>
+		<ee-pin-indicator
+			[model]="model"
+			[inputs]="inputs"
+			[outputs]="outputs">
+		</ee-pin-indicator>
 	`
 })
 
@@ -78,14 +90,20 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 
 	hoverInfo: HoverInfo;
 
+	inputs: string[];
+	outputs: string[];
+
 	constructor(dragService: DragService) {
 		this.hoverInfo = new HoverInfo();
 	}
 
 	ngOnInit() {
+		this.inputs = this.map.viewToInputElement(this.window);
+		this.outputs = this.map.viewToOutputElement(this.window);
+
 		if (this.window && this.map) {
 			try {
-				this.html = this.map.callback(this.window);
+				this.html = this.map.viewToHtml(this.window);
 			} catch(e) {
 				console.warn("Exception for: " + this.window);
 				console.warn(e);

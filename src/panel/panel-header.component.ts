@@ -20,6 +20,7 @@
  */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { ModelConnector } from './model-connector.service';
 import { NodeInterface } from '../node/treenode.interface';
 
 @Component({
@@ -94,7 +95,7 @@ import { NodeInterface } from '../node/treenode.interface';
 				<span class="glyphicon glyphicon-save" *ngIf="!saved" (click)="save()"></span>
 			</div>
 			<div class="ee-icon">
-				<span [ngClass]="{'pinned': pinned}" (click)="pin()">
+				<span [ngClass]="{'pinned': pinned}" (click)="startPinning()">
 					<span class="glyphicon glyphicon-pushpin"></span>
 				</span>
 			</div>
@@ -105,15 +106,17 @@ import { NodeInterface } from '../node/treenode.interface';
 
 export class PanelHeaderComponent {
 	@Input() node: NodeInterface.TreeNode;
+	@Input() map: any;
 
 	@Output("close") closeEmitter: EventEmitter<void> = new EventEmitter<void>();
-	@Output("pin") pinEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	changeName: boolean = false;
 	pinned: boolean = false;
 	saved: boolean = true;
 
-	constructor() { }
+	constructor(private modelconnector: ModelConnector.Service) {
+
+	}
 
 	close(): void {
 		this.closeEmitter.emit();
@@ -132,8 +135,8 @@ export class PanelHeaderComponent {
 		this.saved = true;
 	}
 
-	pin() {
+	startPinning() {
 		this.pinned = !this.pinned;
-		this.pinEmitter.emit(this.pinned);
+		this.modelconnector.startPinning(this.pinned, this.node.model, this.node.window, this.map);
 	}
 }

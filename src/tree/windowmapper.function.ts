@@ -21,6 +21,12 @@
 
 export namespace Map {
 	export interface WindowMapper {
-		callback(data: any): string;
+		viewToHtml(data: any): string;
+		viewToInputElement(data: any): string[];
+		viewToOutputElement(data: any): string[];
+	}
+
+	export interface InputElement {
+		getType(): string;
 	}
 }

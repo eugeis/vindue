@@ -34,6 +34,9 @@ import { SeparatorComponent } from './node/separator.component';
 /* Panel-Elements */
 import { PanelHeaderComponent } from './panel/panel-header.component';
 import { PanelComponent } from './panel/panel.component';
+import { PinIndicator } from './panel/pin-indicator.component';
+
+import { ModelConnector } from './panel/model-connector.service';
 
 /* Pipes */
 import { StringFilterPipe } from './pipes/stringfilter.pipe';
@@ -48,9 +51,10 @@ import { DashboardComponent } from './tree/dashboard.component';
 	imports: [CommonModule, FormsModule, DragModule],
 	declarations: [TreeComponent, TreeHeaderComponent, PanelHeaderComponent,
 		PanelComponent, NodeComponent, SeparatorComponent,
-		StringFilterPipe, LimitPipe, ComponentOutlet, DashboardComponent],
+		StringFilterPipe, LimitPipe, ComponentOutlet, DashboardComponent,
+		PinIndicator],
 	exports: [TreeComponent],
-	providers: []
+	providers: [ModelConnector.Service]
 })
 
 export class WindowManagerModule { }

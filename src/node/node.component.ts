@@ -89,14 +89,19 @@ import { Map } from '../tree/windowmapper.function';
 				</div>
 			</div>
 			<div *ngIf="!node.branches || node.branches.length == 0" class="ee-panel-container">
-				<ee-panel-header [node]="node" (close)="closePanel()"></ee-panel-header>
+				<ee-panel-header
+					[node]="node"
+					[map]="map"
+					(close)="closePanel()">
+				</ee-panel-header>
 				<ee-panel
 					[window]="node.window"
 					[model]="node.model"
 					[map]="map"
 					[sharedData]="sharedData"
 					(insert)="insert($event)"
-					(on)="onPanelAction($event)"></ee-panel>
+					(on)="onPanelAction($event)">
+				</ee-panel>
 			</div>
 		</div>
 	`
