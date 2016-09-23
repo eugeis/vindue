@@ -92,7 +92,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 	template: `
 		<div class="dashboard">
 			<div class="dashboard-wrapper">
-				<div *ngIf="dashboard" class="closer ee-icon" (click)="hideDashboard()"><span>x</span></div>
 				<input type="text" [(ngModel)]="needle" placeholder="Type in the view you want to open..." tabindex="1" autofocus>
 				<div class="dashboard-gallery">
 					<ul>
