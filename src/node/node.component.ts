@@ -26,7 +26,7 @@ import { SeparatorComponent } from './separator.component';
 import { CardinalDirection } from '../drag/cardinaldirection.enum';
 import { PanelComponent } from '../panel/panel.component';
 import { PanelHeaderComponent } from '../panel/panel-header.component';
-import { Wrapper } from '../wrapper.model';
+import { ModelPtr } from '../modelptr.model';
 
 import * as NodeFunctions from './node.functions';
 
@@ -124,7 +124,7 @@ export class NodeComponent implements OnInit {
 
 		if (!this.node.branches || this.node.branches.length == 0) {
 			if (!this.node.model) {
-				this.node.model = new Wrapper<any>({});
+				this.node.model = new ModelPtr();
 			}
 		}
 

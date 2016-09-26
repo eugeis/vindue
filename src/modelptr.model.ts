@@ -22,6 +22,32 @@
  * This class is used to enable call-by-reference
  * for primitives.
  */
-export class Wrapper<T> {
-	constructor(public value: T) {}
+export interface Model {
+	input?: ModelPtr;
+}
+
+export class ModelPtr {
+	private model: Model;
+
+	constructor() {
+		this.model = {};
+	}
+
+	get(key: string) {
+		return this.model[key];
+	}
+
+	set(key: string, data: any) {
+		this.model[key] = data;
+	}
+
+	setInput(input: ModelPtr) {
+		this.model.input = input;
+	}
+
+	getFromInput(key: string) {
+		if (this.model.input) {
+			return this.model.input.get(key);
+		}
+	}
 }

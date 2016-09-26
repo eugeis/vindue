@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { NodeInterface } from '../node/treenode.interface';
 import { Map } from '../tree/windowmapper.function';
-import { Wrapper } from '../wrapper.model';
+import { ModelPtr } from '../modelptr.model';
 
 export namespace ModelConnector {
 	@Injectable()
 	export class Service {
 		private subscribers: Subscriber[] = [];
-		private binder: Wrapper<any>;
+		private binder: ModelPtr;
 
 		constructor() { }
 
@@ -23,7 +23,7 @@ export namespace ModelConnector {
 			}
 		}
 
-		startPinning(pin: boolean, model: Wrapper<any>, window: string, map: Map.WindowMapper) {
+		startPinning(pin: boolean, model: ModelPtr, window: string, map: Map.WindowMapper) {
 			let inputs: string[] = map.viewToInputElement(window);
 
 			if (pin) {
@@ -38,8 +38,8 @@ export namespace ModelConnector {
 			}
 		}
 
-		pinToModel(model: Wrapper<any>) {
-			this.binder.value.inputs = model;
+		pinToModel(model: ModelPtr) {
+			this.binder.setInput(model);
 			this.clearPinStatus();
 		}
 

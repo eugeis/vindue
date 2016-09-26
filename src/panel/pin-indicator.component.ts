@@ -22,7 +22,7 @@ import { Component, Input, ElementRef, OnInit, OnDestroy } from '@angular/core';
 
 import { ModelConnector } from './model-connector.service';
 import { Map } from '../tree/windowmapper.function';
-import { Wrapper } from '../wrapper.model';
+import { ModelPtr } from '../modelptr.model';
 
 @Component({
 	selector: 'ee-pin-indicator',
@@ -40,7 +40,7 @@ import { Wrapper } from '../wrapper.model';
 })
 
 export class PinIndicator implements ModelConnector.Subscriber, OnInit, OnDestroy {
-	@Input() model: Wrapper<any>;
+	@Input() model: ModelPtr;
 	@Input() inputs: string[];
 	@Input() outputs: string[];
 
@@ -54,10 +54,6 @@ export class PinIndicator implements ModelConnector.Subscriber, OnInit, OnDestro
 	}
 
 	setPinStatus(pin: boolean) {
-		if (this.pinning && !pin) {
-			this.model.value.inputs = {};
-		}
-
 		this.pinning = pin;
 	}
 

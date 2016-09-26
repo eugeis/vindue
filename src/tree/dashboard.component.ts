@@ -46,7 +46,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 			padding: 16px 16px 16px 16px;
 		}
 
-		.dashboard-wrapper {
+		.dashboard-ModelPtr {
 			display: block;
 			top: 15%;
 			text-align: center;
@@ -60,7 +60,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 			pointer-events: all;
 		}
 
-		.dashboard-wrapper input {
+		.dashboard-ModelPtr input {
 			width: 450px;
 			height: 45px;
 			font-size: 16pt;
@@ -91,7 +91,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 	`],
 	template: `
 		<div class="dashboard">
-			<div class="dashboard-wrapper">
+			<div class="dashboard-ModelPtr">
 				<input type="text" [(ngModel)]="needle" placeholder="Type in the view you want to open..." tabindex="1" autofocus>
 				<div class="dashboard-gallery">
 					<ul>

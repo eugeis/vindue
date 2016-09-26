@@ -19,14 +19,14 @@
  * @author Jonas Möller
  */
 
-import { Wrapper } from '../wrapper.model';
+import { ModelPtr } from '../modelptr.model';
 
 export namespace NodeInterface {
 	export interface TreeNode {
 		branches: TreeNode[],
 		name?: string,
 		window?: string,
-		model?: Wrapper<any>,
+		model?: ModelPtr,
 		size?: number
 	}
 
