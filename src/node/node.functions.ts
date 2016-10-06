@@ -93,7 +93,10 @@ export function insertPanel(d: DragInfo, orientation: NodeOrientation, branches:
 export function deletePanel(childNode: NodeInterface.TreeNode, branches: NodeInterface.TreeNode[]): void {
 	let i = branches.indexOf(childNode);
 	if (0 <= i && i < branches.length) {
-		branches.splice(i, 1);
+		let removed = branches.splice(i, 1)[0];
+		if (branches.length == 1) {
+			sizeConservation(removed, branches);
+		}
 	}
 }
 
@@ -110,10 +113,17 @@ export function promotePanel(childNode: NodeInterface.TreeNode, branches: NodeIn
 		} else {
 			//Level-2 promoting
 			let removed: NodeInterface.TreeNode = branches.splice(i, 1)[0];
-			childNode.branches[0].branches.forEach(function(d) {
-				d.size = removed.size / childNode.branches[0].branches.length;
-			});
+			sizeConservation(removed, childNode.branches[0].branches);
 			branches.splice.apply(branches, [<any>i, 0].concat(childNode.branches[0].branches));
 		}
 	}
+}
+
+/**
+ * Preserve the size of a removed node in the branch-array
+ */
+function sizeConservation(removed: NodeInterface.TreeNode, branches: NodeInterface.TreeNode[]) {
+	branches.forEach(function(d) {
+		d.size = removed.size / branches.length;
+	});
 }

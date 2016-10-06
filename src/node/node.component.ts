@@ -125,9 +125,7 @@ export class NodeComponent implements OnInit {
 	 * - Set the name of the panel
 	 */
 	ngOnInit() {
-		if (!this.node.size || this.node.size < 1) {
-			this.node.size = 1;
-		}
+		this.node.size = this.node.size || 1;
 
 		if (!this.node.branches || this.node.branches.length == 0) {
 			if (!this.node.model) {
