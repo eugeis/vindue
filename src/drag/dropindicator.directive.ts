@@ -18,10 +18,11 @@
  *
  * @author Jonas Möller
  */
-import { Directive, Input, ElementRef } from '@angular/core';
+import { Directive, Input, ElementRef, Renderer } from '@angular/core';
 
 import { CardinalDirection } from  './cardinaldirection.enum';
 import { HoverInfo } from './hoverinfo.model';
+import { convertCardinalDirection } from './drag.functions';
 
 @Directive({ selector: '[dropIndicator]' })
 export class DropIndicator {
@@ -30,62 +31,47 @@ export class DropIndicator {
 
 	el: any;
 
-	constructor (er: ElementRef) {
+	constructor (er: ElementRef, private renderer: Renderer) {
 		this.el = er.nativeElement;
 		this.oldHoverInfo = new HoverInfo();
 	}
 
 	ngDoCheck() {
 		if (this.hoverInfo) {
-			if (this.hoverInfo.direction !== this.oldHoverInfo.direction) {
-				switch(this.hoverInfo.direction) {
+			let direction = convertCardinalDirection(this.hoverInfo.direction);
+			if (direction !== this.oldHoverInfo.direction) {
+
+				this.renderer.setElementClass(this.el, 'center', false);
+				this.renderer.setElementClass(this.el, 'north', false);
+				this.renderer.setElementClass(this.el, 'south', false);
+				this.renderer.setElementClass(this.el, 'west', false);
+				this.renderer.setElementClass(this.el, 'east', false);
+
+				switch(direction) {
 					case CardinalDirection.Center:
-					this.el.style.width = "100%";
-					this.el.style.height = "100%";
-					this.el.style.top = "0";
-					this.el.style.left = "0";
+					this.renderer.setElementClass(this.el, 'center', true);
 					break;
 
 					case CardinalDirection.North:
-					case CardinalDirection.Northwestnorth:
-					case CardinalDirection.Northeastnorth:
-					this.el.style.width = "100%";
-					this.el.style.height = "50%";
-					this.el.style.top = "0";
-					this.el.style.left = "0";
+					this.renderer.setElementClass(this.el, 'north', true);
 					break;
 
 					case CardinalDirection.South:
-					case CardinalDirection.Southwestsouth:
-					case CardinalDirection.Southeastsouth:
-					this.el.style.width = "100%";
-					this.el.style.height = "50%";
-					this.el.style.top = "50%";
-					this.el.style.left = "0";
+					this.renderer.setElementClass(this.el, 'south', true);
 					break;
 
 					case CardinalDirection.West:
-					case CardinalDirection.Westnorthwest:
-					case CardinalDirection.Westsouthwest:
-					this.el.style.width = "50%";
-					this.el.style.height = "100%";
-					this.el.style.top = "0";
-					this.el.style.left = "0";
+					this.renderer.setElementClass(this.el, 'west', true);
 					break;
 
 					case CardinalDirection.East:
-					case CardinalDirection.Eastnortheast:
-					case CardinalDirection.Eastsoutheast:
-					this.el.style.width = "50%";
-					this.el.style.height = "100%";
-					this.el.style.top = "0";
-					this.el.style.left = "50%";
+					this.renderer.setElementClass(this.el, 'east', true);
 					break;
 
 					default: break;
 				}
 
-				this.oldHoverInfo.direction = this.hoverInfo.direction;
+				this.oldHoverInfo.direction = direction;
 			}
 		}
 	}

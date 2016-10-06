@@ -61,6 +61,36 @@ interface OnPanelAction {
 			flex: 0;
 			pointer-events: none;
 		}
+		.ee-panel-hover.center {
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+		}
+		.ee-panel-hover.north {
+			width: 100%;
+			height: 50%;
+			top: 0;
+			left: 0;
+		}
+		.ee-panel-hover.south {
+			width: 100%;
+			height: 50%;
+			top: 50%;
+			left: 0;
+		}
+		.ee-panel-hover.west {
+			width: 50%;
+			height: 100%;
+			top: 0;
+			left: 0;
+		}
+		.ee-panel-hover.east {
+			width: 50%;
+			height: 100%;
+			top: 0;
+			left: 50%;
+		}
 	`],
 	template: `
 		<div class="ee-panel" [hoverInfo]="hoverInfo" (dropping)="rearrange($event)" dropZone="'panel'">
@@ -88,6 +118,9 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 	html: string;
 	self: PanelComponent = this;
 
+	/**
+	 * HoverInfo is the shared state between the panels dropZone and its dropIndicator
+	 */
 	hoverInfo: HoverInfo;
 
 	inputs: string[];
