@@ -95,7 +95,7 @@ import { NodeInterface } from '../node/treenode.interface';
 				<span class="glyphicon glyphicon-save" *ngIf="!saved" (click)="save()"></span>
 			</div>
 			<div class="ee-icon">
-				<span [ngClass]="{'pinned': pinned}" (click)="startPinning()">
+				<span [ngClass]="{'pinned': pinned}" (click)="togglePinning()">
 					<span class="glyphicon glyphicon-pushpin"></span>
 				</span>
 			</div>
@@ -135,7 +135,7 @@ export class PanelHeaderComponent {
 		this.saved = true;
 	}
 
-	startPinning() {
+	togglePinning() {
 		this.pinned = !this.pinned;
 		if (this.pinned) {
 			this.modelconnector.startPinning(this.node.model, this.node.window, this.map);

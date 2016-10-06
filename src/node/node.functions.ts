@@ -26,6 +26,32 @@ import { NodeOrientation } from './nodeorientation.enum';
 
 import { NodeInterface } from './treenode.interface';
 
+/**
+ * Insert the drag-source (from DragInfo) into the branches array.
+ * There are eight different insertion possibilities:
+ *
+ * 1. north / horizontal
+ * 2. west / vertical
+ * => insert the source left from the target
+ * before: [node, node, target]
+ * after:  [node, node, source, target]
+ *
+ * 3. east / vertical
+ * 4. south / horizontal
+ * => insert the source right from the target
+ * before: [node, node, target]
+ * after:  [node, node, target, source]
+ *
+ * 5. north / vertical
+ * 6. west / horizontal
+ * => replace the target by a new node, which has the branches:
+ * [source, target]
+ *
+ * 7. east / horizontal
+ * 8. south / horiztonal
+ * => replace the target by a new node, which has the branches:
+ * [target, source]
+ */
 export function insertPanel(d: DragInfo, orientation: NodeOrientation, branches: NodeInterface.TreeNode[]): void {
 	let i: number = branches.indexOf(d.target);
 	let dir: CardinalDirection = d.direction;
@@ -61,6 +87,9 @@ export function insertPanel(d: DragInfo, orientation: NodeOrientation, branches:
 	}
 }
 
+/**
+ * Remove the panel from the branch-array
+ */
 export function deletePanel(childNode: NodeInterface.TreeNode, branches: NodeInterface.TreeNode[]): void {
 	let i = branches.indexOf(childNode);
 	if (0 <= i && i < branches.length) {
@@ -68,13 +97,18 @@ export function deletePanel(childNode: NodeInterface.TreeNode, branches: NodeInt
 	}
 }
 
+/**
+ * Promote the panel (see DOCUMENTATION.md).
+ */
 export function promotePanel(childNode: NodeInterface.TreeNode, branches: NodeInterface.TreeNode[]): void {
 	let i = branches.indexOf(childNode);
 	if (0 <= i && i < branches.length && childNode.branches.length == 1) {
 		if (childNode.branches[0].branches.length <= 1) {
+			//Level-1 promoting
 			childNode.branches[0].size = branches[i].size;
 			branches[i] = childNode.branches[0];
 		} else {
+			//Level-2 promoting
 			let removed: NodeInterface.TreeNode = branches.splice(i, 1)[0];
 			childNode.branches[0].branches.forEach(function(d) {
 				d.size = removed.size / childNode.branches[0].branches.length;

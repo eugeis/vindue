@@ -102,13 +102,26 @@ export interface Tree extends NodeInterface.TreeNode {
 })
 
 export class TreeComponent {
+	/**
+	 * Name-Indentifiers of the windows
+	 **/
 	@Input() windows: string[] = [];
+
+	/**
+	 * Functions to map a window-name to their
+	 * inputs, outputs and html-selector
+	 */
 	@Input() map: Map.WindowMapper = {
 		viewToHtml: (d:string) => { return "" },
 		viewToInputElement: (d:string) => { return [] },
 		viewToOutputElement: (d:string) => { return [] }
 	}
+
+	/**
+	 * Data which is shared between all views
+	 */
 	@Input() sharedData = {};
+
 	@Input() tree: Tree = {
 		orientation: NodeOrientation.Vertical,
 		branches: []
@@ -116,6 +129,10 @@ export class TreeComponent {
 
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
+	/**
+	 * Shared state of the dashboard
+	 * true, if the dashboard should be displayed
+	 */
 	dashboard: boolean = false;
 
 	showDashboard(e: MouseEvent) {

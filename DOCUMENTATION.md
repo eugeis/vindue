@@ -21,15 +21,19 @@ Adding a panel is done by clicking the top-left button. A window is shown, where
 
 ![](/documentation/assets/add-tree.png)
 
-### Closing a panel (Elevation 1)
+### Deleting a panel
 
-Closing a panel is done by clicking the top-left button of a panel (marked with an 'x'). In the following example the red panel has been closed. Because this leaves the parent-node with one child remaining, the (only) child is elevated by one level and therefore replaces its parent.
+Closing a panel is done by clicking the top-right button of a panel (marked with an 'x'). When a panel is closed, that has more than one sibling, it simply is removed from the tree. No further manipulation of the tree is needed.
+
+### Promoting a panel (Level-1)
+
+Promoting takes place, when a node is left with only one child. In the following example the red panel has been closed. Because this leaves the parent-node with one child remaining, the (only) child is elevated by _one level_ and therefore replaces its parent.
 
 ![](/documentation/assets/close-tree.png)
 
-### Promoting panels (Elevation 2)
+### Promoting panels (Level-2)
 
-'Promoting' is a special closing-case and done when a node is left with one child, which isn't a panel leaf-node. Promoting elevates panels by two levels. If for example the green panel is closed, its parent is left with one child (the only child). If the only child were elevated by one level (therefore replaces its parent), the orientation of its children would be switched (thus messing up the configuration). Therefore, the only child's children are elevated by two levels, which preserves the orientation.
+Level-2 promoting is another closing-case and done when a node is left with one child, which isn't a panel leaf-node. If for example the green panel is closed, its parent is left with one child (the only child). If the only child *were* elevated by one level (therefore replaces its parent), the orientation of its children would be switched (thus messing up the configuration). Therefore, the only child's children are elevated by _two levels_, which preserves the orientation.
 
 ![](/documentation/assets/promote-tree.png)
 

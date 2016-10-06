@@ -119,8 +119,15 @@ export class NodeComponent implements OnInit {
 	@Output("closePanel") closeEmitter: EventEmitter<NodeInterface.TreeNode> = new EventEmitter<NodeInterface.TreeNode>();
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
+	/**
+	 * - Set the size of the panel, if it hasn't been set.
+	 * - Create a viewmodel, if the node is a branch
+	 * - Set the name of the panel
+	 */
 	ngOnInit() {
-		this.node.size = this.node.size || 1;
+		if (!this.node.size || this.node.size < 1) {
+			this.node.size = 1;
+		}
 
 		if (!this.node.branches || this.node.branches.length == 0) {
 			if (!this.node.model) {
@@ -133,14 +140,23 @@ export class NodeComponent implements OnInit {
 		}
 	}
 
+	/**
+	 * Wraps an external function to be used in bare html
+	 */
 	nodeClass(orientation: NodeOrientation): string {
 		return getClass(orientation);
 	}
 
+	/**
+	 * Wraps an external function to be used in bare html
+	 */
 	nodeInv(orientation: NodeOrientation): NodeOrientation {
 		return inv(orientation);
 	}
 
+	/**
+	 * Insert the panel by adding it to the parent's branch array
+	 */
 	insert(dragInfo: DragInfo): void {
 		dragInfo.target = this.node;
 		if (dragInfo.target !== dragInfo.source) {
@@ -148,6 +164,9 @@ export class NodeComponent implements OnInit {
 		}
 	}
 
+	/**
+	 * Insert the panel into the branch-array and close the original panel
+	 */
 	insertPanel(dragInfo: DragInfo) {
 		if (dragInfo.direction === CardinalDirection.Center) {
 			dragInfo.direction = CardinalDirection.North;
@@ -157,10 +176,17 @@ export class NodeComponent implements OnInit {
 		dragInfo.closeOrigin();
 	}
 
+	/**
+	 * Close the current panel by removing it from the parent's branch-array
+	 */
 	closePanel(): void {
 		this.closeEmitter.emit(this.node);
 	}
 
+	/**
+	 * Delete the panel from the branches-array.
+	 * If only one child is left, promote this node.
+	 */
 	deletePanel(childNode: NodeInterface.TreeNode): void {
 		NodeFunctions.deletePanel(childNode, this.node.branches);
 

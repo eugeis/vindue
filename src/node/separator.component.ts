@@ -46,18 +46,31 @@ import { SeparatorInterface }  from './separator.functions';
 		}
 	`],
 	template: `
-		<div class="ee-separator" [ngClass]="sepClass(orientation)"></div>
+		<div class="ee-separator" [ngClass]="getClass(orientation)"></div>
 	`
 })
 
 export class SeparatorComponent implements OnInit {
 	@Input() orientation: NodeOrientation;
+
+	/**
+	 * The element left of / above the separator
+	 */
 	@Input() left: NodeInterface.TreeNode;
+
+	/**
+	 * The element right of / beneath the separator
+	 */
 	@Input() right: NodeInterface.TreeNode;
 
 	dimensions: SeparatorInterface.ElementDimension;
 	cursorStart: [number, number];
 
+	/**
+	 * Start the dragging:
+	 * - save dimensions of the elements beside the separator
+	 * - save the cursor position / drag position
+	 */
 	@HostListener('dragstart', ['$event']) onDragStart(e: MouseEvent) {
 		let prev = this.er.nativeElement.parentElement;
 		let next = prev.nextElementSibling;
@@ -69,6 +82,9 @@ export class SeparatorComponent implements OnInit {
 		e.stopPropagation();
 	}
 
+	/**
+	 * Calculate the new sizes of the elements beside the separator
+	 */
 	@HostListener('dragend', ['$event']) onDragEnd(e: MouseEvent) {
 		let size: SeparatorInterface.ElementSize = {
 			prevEl: this.left.size,
@@ -84,7 +100,10 @@ export class SeparatorComponent implements OnInit {
 		this.right.size = sizes[1];
 	}
 
-	sepClass(orientation: NodeOrientation) {
+	/**
+	 * Wraps an external function to be used in bare html
+	 */
+	getClass(orientation: NodeOrientation) {
 		return getClass(orientation);
 	}
 

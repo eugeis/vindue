@@ -40,11 +40,29 @@ import { ModelPtr } from '../modelptr.model';
 })
 
 export class PinIndicator implements ModelConnector.Subscriber, OnInit, OnDestroy {
+	/**
+	 * The model of the panel associated with the PinIndicator
+	 */
 	@Input() model: ModelPtr;
+
+	/*
+	 * The inputs of the panel associated with the PinIndicator
+	 */
 	@Input() inputs: string[];
+
+	/*
+	 * The outputs of the panel associated with the PinIndicator
+	 */
 	@Input() outputs: string[];
 
+	/**
+	 * If pinning is true, show the pin indicator
+	 */
 	pinning: boolean;
+
+	/**
+	 * Function to unsubscribe from the modelconnector-service
+	 */
 	unsubscribe: any;
 
 	constructor (private modelconnector: ModelConnector.Service) { }

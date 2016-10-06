@@ -20,6 +20,9 @@
  */
 import { CardinalDirection } from './cardinaldirection.enum';
 
+/**
+ * HoverInfo saves the state of the DropIndicator
+ */
 export class HoverInfo {
 	direction: CardinalDirection;
 	display: boolean;

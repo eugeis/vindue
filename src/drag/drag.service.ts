@@ -27,6 +27,14 @@ import { CardinalDirection } from '../drag/cardinaldirection.enum';
 export class DragService {
 	private info: DragInfo;
 
+	/**
+	 * Initializes the DragInfo
+	 * source: the dragged element
+	 * target: the element the source is dropped on
+	 * type: identifier for dropping (elements can only be dropped onto the same type)
+	 * direction: the direction of target-node
+	 * closeOrigin: callback-function to close the dragged node
+	 */
 	initDragging(node: any, type: string, closeEmitter: EventEmitter<void>): void {
 		this.info = {
 			source: node,
@@ -35,7 +43,7 @@ export class DragService {
 			direction: undefined,
 			closeOrigin: function() {
 				if (closeEmitter) {
-					closeEmitter.emit();					
+					closeEmitter.emit();
 				}
 				closeEmitter = null;
 			}
@@ -61,6 +69,9 @@ export class DragService {
 		this.info = undefined;
 	}
 
+	/**
+	 * Returns a copy of the info
+	 */
 	getInfo(): DragInfo {
 		return shallowCopyDragInfo(this.info);
 	}

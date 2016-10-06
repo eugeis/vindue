@@ -106,12 +106,22 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class DashboardComponent {
+	/**
+	 * Windows to be displayed in the dashboard
+	 */
 	@Input() windows: string[] = [];
 
 	@Output("add") addEmitter: EventEmitter<string> = new EventEmitter<string>();
 	@Output("hide") hideEmitter: EventEmitter<void> = new EventEmitter<void>();
 
+	/**
+	 * Limit the number of windows displayed
+	 */
 	limit: number = 20;
+
+	/**
+	 * Only windows containing the needle are displayed
+	 */
 	needle: string = "";
 
 	add(view: string) {

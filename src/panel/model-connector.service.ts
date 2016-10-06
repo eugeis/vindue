@@ -10,9 +10,7 @@ export namespace ModelConnector {
 	export class Service {
 		private subscribers: Subscriber[] = [];
 		private binder: ModelPtr;
-
-		constructor() { }
-
+		
 		/**
 		 * Add a subscriber to the subscribers list
 		 * Returns a function for unsubscribing
@@ -29,7 +27,11 @@ export namespace ModelConnector {
 		}
 
 		/**
+		 * Start the pinning process:
+		 * - save the panel, which is to pin (i.e. which gets its input set)
+		 * - notify all subscribers (i.e. panels) to display the pinIndicators
 		 *
+		 * (Pinning ends with pinToModel)
 		 */
 		startPinning(model: ModelPtr, window: string, map: Map.WindowMapper) {
 			let inputs: string[] = map.viewToInputElement(window);
@@ -43,7 +45,11 @@ export namespace ModelConnector {
 		}
 
 		/**
+		 * Ends the pinning process:
+		 * - the saved panel has its input set to the selected model
+		 * - the pinIndicators are no longer displayed
 		 *
+		 * (Pinning starts with startPinning)
 		 */
 		pinToModel(model: ModelPtr) {
 			this.binder.setInput(model);

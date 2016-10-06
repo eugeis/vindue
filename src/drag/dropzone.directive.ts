@@ -30,6 +30,9 @@ import * as DragFunctions from './drag.functions';
 })
 
 export class DropZone {
+	/**
+	 * The dropzone-type is used to define differnt target-dropzones.
+	 */
 	@Input("dropZone") type: string;
 	@Input() hoverInfo: HoverInfo;
 	@Output("dropping") dropEmitter: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
@@ -41,6 +44,10 @@ export class DropZone {
 		this.dragService = dragService;
 	}
 
+	/**
+	 * When something is dragged above the dragzone, calculate the CardinalDirection
+	 * direction and display the dragIndication.
+	 */
 	@HostListener('dragover', ['$event']) onDragOver(e: MouseEvent) {
 		if (this.dragService.isDragging(this.type)) {
 			this.hoverInfo.direction = DragFunctions.getCardinalDirection(
@@ -54,10 +61,18 @@ export class DropZone {
 		}
 	}
 
+	/**
+	 * Stop displaying the dragIndicator.
+	 */
 	@HostListener('dragleave', ['$event']) onDragLeave(e) {
 		this.hoverInfo.display = false;
 	}
 
+	/**
+	 * Stop displaying the dragIndicator.
+	 * Set the cardinal direction (where the element was dropped) in the dragService
+	 * Emit DragInfo to PanelComponent - this rearranges the node in the tree.
+	 */
 	@HostListener('drop', ['$event']) onDrop(e) {
 		this.hoverInfo.display = false;
 		this.dragService.setDirection(
