@@ -2,7 +2,6 @@
 * [vindue](#vindue)
 	* [Tree](#TreeStructure)
 	* [Drag and Drop](#DnD)
-	* [Separators / Resizing](#Separator)
 
 <a name="vindue" />
 # vindue
@@ -41,24 +40,25 @@ Closing a panel is done by clicking the top-left button of a panel (marked with 
 
 The user can drag a panel by the panel-header and drop it onto another panel. Upon dragging a panel above another one a hover-information appears, which indicates where the panel will be dropped. The image above shows the differen regions a panel can be dropped into:
 
-	- North = red
-
-	- West = green
-
-	- Center = blue
-
-	- East = yellow
-
-	- South = grey
+- North = red
+- West = green
+- Center = blue
+- East = yellow
+- South = grey
 
 ![](/documentation/assets/drag-sizes.png)
 
 The regions have the aspect ratio shown in the image above:
 
-	-	center: 1.61
-	-	top, left, right, bottom: 1
+- center: 1.618
+- top, left, right, bottom: 1
 
-<a name="Separator" />
-## Separators / Resizing
+### North / South dropping
 
-_coming soon_
+![](/documentation/assets/drag-north-south.png)
+
+![](/documentation/assets/drag-second-layer-west-east.png)
+
+### West / East dropping
+
+![](/documentation/assets/drag-west-east.png)
