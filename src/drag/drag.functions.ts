@@ -1,5 +1,13 @@
 import { CardinalDirection } from './cardinaldirection.enum';
 
+
+/**
+ * Calculates the CardinalDireciton of a point located on a rectangular area.
+ * The point is represented by the x- and y-coordinates on the area, which is
+ * described by its width and height.
+ *
+ * See the drag- and drop-section of DOCUMENTATION.md
+ */
 export function getCardinalDirection(x: number, y: number, w: number, h: number): CardinalDirection {
 	const goldenRatio = 1.618;
 	const width = w;
@@ -84,6 +92,16 @@ export function getCardinalDirection(x: number, y: number, w: number, h: number)
 	throw "Undefined cardinal direction";
 }
 
+/**
+ * Converts the twelve cardinaldirections (excluding center) to the four basic-tree
+ * cardinal directions (excluding center):
+ *
+ * {north, northwestnorth, northeastnorth} -> north
+ * {south, southwestsouth, southeastsouth} -> south
+ * {west, westnorthwest, westsouthwest} -> west
+ * {east, eastnortheast, eastsoutheast} -> east
+ * {center} -> center
+ */
 export function convertCardinalDirection(direction: CardinalDirection) {
 	switch(direction) {
 		case CardinalDirection.Center:

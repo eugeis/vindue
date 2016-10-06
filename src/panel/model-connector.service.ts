@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { NodeInterface } from '../node/treenode.interface';
 import { Map } from '../tree/windowmapper.function';
 import { ModelPtr } from '../modelptr.model';
+import { intersect } from './intersect.functions';
 
 export namespace ModelConnector {
 	@Injectable()
@@ -12,6 +13,10 @@ export namespace ModelConnector {
 
 		constructor() { }
 
+		/**
+		 * Add a subscriber to the subscribers list
+		 * Returns a function for unsubscribing
+		 */
 		subscribe(sub: Subscriber) {
 			this.subscribers.push(sub);
 
@@ -23,26 +28,31 @@ export namespace ModelConnector {
 			}
 		}
 
-		startPinning(pin: boolean, model: ModelPtr, window: string, map: Map.WindowMapper) {
+		/**
+		 *
+		 */
+		startPinning(model: ModelPtr, window: string, map: Map.WindowMapper) {
 			let inputs: string[] = map.viewToInputElement(window);
 
-			if (pin) {
-				this.subscribers.forEach((d) => {
-					if (intersect(inputs, d.outputs).length > 0) {
-						d.setPinStatus(true);
-						this.binder = model;
-					}
-				});
-			} else {
-				this.clearPinStatus();
-			}
+			this.binder = model;
+			this.subscribers.forEach((d) => {
+				if (intersect(inputs, d.outputs).length > 0) {
+					d.setPinStatus(true);
+				}
+			});
 		}
 
+		/**
+		 *
+		 */
 		pinToModel(model: ModelPtr) {
 			this.binder.setInput(model);
 			this.clearPinStatus();
 		}
 
+		/**
+		 * Sets all subscribers' pin-status to false and clears the service's binder
+		 */
 		clearPinStatus() {
 			this.subscribers.forEach((d) => {
 				d.setPinStatus(false);
@@ -55,25 +65,5 @@ export namespace ModelConnector {
 		setPinStatus(pin: boolean): void;
 		inputs: string[];
 		outputs: string[];
-	}
-
-	export function intersect(inputs1: string[], inputs2: string[]): string[] {
-		let ar1 = inputs1.slice(0).sort();
-		let ar2 = inputs2.slice(0).sort();
-
-		let ret: string[] = [];
-
-		let ptr = 0;
-		for (let i = 0; i < ar1.length; i++) {
-			if (ar1[i] == ar2[ptr]) {
-				ret.push(ar1[i]);
-				ptr++;
-			} else if (ar1[i] > ar2[ptr]) {
-				i--;
-				ptr++;
-			}
-		}
-
-		return ret;
 	}
 }

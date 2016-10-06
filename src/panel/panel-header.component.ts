@@ -137,6 +137,10 @@ export class PanelHeaderComponent {
 
 	startPinning() {
 		this.pinned = !this.pinned;
-		this.modelconnector.startPinning(this.pinned, this.node.model, this.node.window, this.map);
+		if (this.pinned) {
+			this.modelconnector.startPinning(this.node.model, this.node.window, this.map);
+		} else {
+			this.modelconnector.clearPinStatus();
+		}
 	}
 }
