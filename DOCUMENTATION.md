@@ -62,3 +62,24 @@ The regions have the aspect ratio shown in the image above:
 ### West / East dropping
 
 ![](/documentation/assets/drag-west-east.png)
+
+## App-Structure
+
+![](/documentation/assets/app-structure.png)
+
+```
+TreeComponent
+├── TreeHeaderComponent
+└── NodeComponent
+    ├── NodeComponent (TaskExplorer)
+    │   ├── PanelHeaderComponent
+    │   └── PanelComponent
+    │       ├── ComponentOutlet
+    │       └── PinIndicator
+    ├── SeparatorComponent
+    └── NodeComponent (TaskDetails)
+        ├── PanelHeaderComponent
+        └── PanelComponent
+            ├── ComponentOutlet
+            └── PinIndicator
+```
