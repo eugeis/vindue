@@ -124,6 +124,6 @@ export function promotePanel(childNode: NodeInterface.TreeNode, branches: NodeIn
  */
 function sizeConservation(removed: NodeInterface.TreeNode, branches: NodeInterface.TreeNode[]) {
 	branches.forEach(function(d) {
-		d.size = removed.size / branches.length;
+		d.size += removed.size / branches.length;
 	});
 }
