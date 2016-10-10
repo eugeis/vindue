@@ -38,6 +38,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li (click)="add($event)"><a href="#"><span class="glyphicon glyphicon-plus"></span> Add</a></li>
+					<li (click)="load()"><a href="#"><span class="glyphicon glyphicon-folder-open"></span> Load</a></li>
+					<li (click)="save()"><a href="#"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 				</ul>
@@ -48,10 +50,20 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 export class TreeHeaderComponent {
 	@Output("add") addEmitter: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+	@Output("save") saveEmitter: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+	@Output("load") loadEmitter: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
 	constructor() { }
 
 	add(e: MouseEvent): void {
 		this.addEmitter.emit(e);
+	}
+
+	save(): void {
+		this.saveEmitter.emit();
+	}
+
+	load(): void {
+		this.loadEmitter.emit();
 	}
 }

@@ -80,7 +80,7 @@ import { StateService } from '../perspective/state.service';
 	`],
 	template: `
 		<div class="ee-tree" *ngIf="tree.branches.length > 0" (click)="hideDashboard()">
-			<ee-tree-header (add)="showDashboard($event)"></ee-tree-header>
+			<ee-tree-header (add)="showDashboard($event)" (save)="save()" (load)="load()"></ee-tree-header>
 			<ee-node
 				[node]="tree"
 				[orientation]="tree.orientation"
@@ -160,5 +160,16 @@ export class TreeComponent {
 
 	onPanelAction(e) {
 		this.onEmitter.emit(e);
+	}
+
+	save() {
+		this.stateService.savePerspective("my", this.tree);
+	}
+
+	load() {
+		let tree = this.stateService.restorePerspective("my");
+		if (tree) {
+			this.tree = tree;
+		}
 	}
 }
