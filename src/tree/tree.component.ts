@@ -24,12 +24,9 @@ import { TreeHeaderComponent } from './tree-header.component';
 import { NodeComponent } from '../node/node.component';
 import { NodeOrientation } from '../node/nodeorientation.enum';
 
-import { NodeInterface } from '../node/treenode.interface';
+import { TreeInterface } from './tree.interface';
 import { Map } from './windowmapper.function';
 
-export interface Tree extends NodeInterface.TreeNode {
-	orientation: NodeOrientation
-}
 
 @Component({
 	selector: 'ee-tree',
@@ -122,7 +119,7 @@ export class TreeComponent {
 	 */
 	@Input() sharedData = {};
 
-	@Input() tree: Tree = {
+	@Input() tree: TreeInterface.Tree = {
 		orientation: NodeOrientation.Vertical,
 		branches: []
 	};
