@@ -41,12 +41,16 @@ import { PinIndicator } from '../panel/pin-indicator.component';
 
 import { ModelConnector } from '../panel/model-connector.service';
 
+/* Perspective */
+import { StateService } from '../perspective/state.service';
+
 /* Pipes */
 import { StringFilterPipe } from '../pipes/stringfilter.pipe';
 import { LimitPipe } from '../pipes/limit.pipe';
 
 /* TreeElements */
-import { Tree, TreeComponent } from './tree.component';
+import { TreeInterface } from './tree.interface';
+import { TreeComponent } from './tree.component';
 import { TreeHeaderComponent } from './tree-header.component';
 import { DashboardComponent } from './dashboard.component';
 import { NodeOrientation } from '../node/nodeorientation.enum';
@@ -64,7 +68,7 @@ describe("TreeComponent", () => {
 				PinIndicator],
 			providers: [provideComponentOutletModule({
 				imports: [CommonModule]
-			}), ModelConnector.Service]
+			}), ModelConnector.Service, StateService]
 		})
 		.compileComponents();
 	}));
@@ -76,7 +80,7 @@ describe("TreeComponent", () => {
 
 
 	it('should display the dashboardCurtain', () => {
-		let tree: Tree = {
+		let tree: TreeInterface.Tree = {
 			orientation: NodeOrientation.Horizontal,
 			branches: []
 		}
@@ -89,7 +93,7 @@ describe("TreeComponent", () => {
 	});
 
 	it('should display the tree (one node)', () => {
-		let tree: Tree = {
+		let tree: TreeInterface.Tree = {
 			orientation: NodeOrientation.Horizontal,
 			branches: [{
 				branches: [],
@@ -105,7 +109,7 @@ describe("TreeComponent", () => {
 	});
 
 	it('should display the tree (three nodes)', () => {
-		let tree: Tree = {
+		let tree: TreeInterface.Tree = {
 			orientation: NodeOrientation.Horizontal,
 			branches: [{
 				branches: []
@@ -124,7 +128,7 @@ describe("TreeComponent", () => {
 	});
 
 	it('should add a node', () => {
-		let tree: Tree = {
+		let tree: TreeInterface.Tree = {
 			orientation: NodeOrientation.Horizontal,
 			branches: []
 		}
@@ -148,7 +152,7 @@ describe("TreeComponent", () => {
 	});
 
 	it('should add a node, show the dashboard and hide it again', () => {
-		let tree: Tree = {
+		let tree: TreeInterface.Tree = {
 			orientation: NodeOrientation.Horizontal,
 			branches: []
 		}
