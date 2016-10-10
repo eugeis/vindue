@@ -22,32 +22,53 @@
  * This class is used to enable call-by-reference
  * for primitives.
  */
+let identifier = 0;
+
 export interface Model {
 	input?: ModelPtr;
 }
 
 export class ModelPtr {
-	model: Model;
+	ptr: Model;
+	identifier: number;
 
 	constructor() {
-		this.model = {};
+		this.ptr = {};
+		this.identifier = identifier++;
 	}
 }
 
+export function copy(modelPtr: ModelPtr): ModelPtr {
+	let newModel = new ModelPtr();
+	newModel.ptr = Object.assign({}, modelPtr.ptr);
+
+	return newModel;
+}
+
 export function get(modelPtr: ModelPtr, key: string) {
-	return modelPtr.model[key];
+	return modelPtr.ptr[key];
 }
 
 export function set(modelPtr: ModelPtr, key: string, data: any) {
-	modelPtr.model[key] = data;
+	modelPtr.ptr[key] = data;
+}
+
+export function hasInput(modelPtr: ModelPtr) {
+	return modelPtr.ptr.input !== undefined;
 }
 
 export function setInput(modelPtr: ModelPtr, input: ModelPtr) {
-	modelPtr.model.input = input;
+	modelPtr.ptr.input = input;
 }
 
 export function getFromInput(modelPtr: ModelPtr, key: string) {
-	if (modelPtr.model.input) {
- 		return get(modelPtr.model.input, key);
+	if (modelPtr.ptr.input) {
+		return get(modelPtr.ptr.input, key);
+	}
+}
+
+export function getInputIdentifier(modelPtr: ModelPtr){
+	if (modelPtr.ptr.input) {
+		return modelPtr.ptr.input.identifier;
 	}
 }
