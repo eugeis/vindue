@@ -27,27 +27,27 @@ export interface Model {
 }
 
 export class ModelPtr {
-	private model: Model;
+	model: Model;
 
 	constructor() {
 		this.model = {};
 	}
+}
 
-	get(key: string) {
-		return this.model[key];
-	}
+export function get(modelPtr: ModelPtr, key: string) {
+	return modelPtr.model[key];
+}
 
-	set(key: string, data: any) {
-		this.model[key] = data;
-	}
+export function set(modelPtr: ModelPtr, key: string, data: any) {
+	modelPtr.model[key] = data;
+}
 
-	setInput(input: ModelPtr) {
-		this.model.input = input;
-	}
+export function setInput(modelPtr: ModelPtr, input: ModelPtr) {
+	modelPtr.model.input = input;
+}
 
-	getFromInput(key: string) {
-		if (this.model.input) {
-			return this.model.input.get(key);
-		}
+export function getFromInput(modelPtr: ModelPtr, key: string) {
+	if (modelPtr.model.input) {
+ 		return get(modelPtr.model.input, key);
 	}
 }

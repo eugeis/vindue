@@ -27,6 +27,7 @@ import { NodeOrientation } from '../node/nodeorientation.enum';
 import { TreeInterface } from './tree.interface';
 import { Map } from './windowmapper.function';
 
+import { StateService } from '../perspective/state.service';
 
 @Component({
 	selector: 'ee-tree',
@@ -131,6 +132,10 @@ export class TreeComponent {
 	 * true, if the dashboard should be displayed
 	 */
 	dashboard: boolean = false;
+
+	constructor(private stateService: StateService) {
+
+	}
 
 	showDashboard(e: MouseEvent) {
 		this.dashboard = true;

@@ -38,6 +38,9 @@ import { PinIndicator } from './panel/pin-indicator.component';
 
 import { ModelConnector } from './panel/model-connector.service';
 
+/* Perspective */
+import { StateService } from './perspective/state.service';
+
 /* Pipes */
 import { StringFilterPipe } from './pipes/stringfilter.pipe';
 import { LimitPipe } from './pipes/limit.pipe';
@@ -54,7 +57,7 @@ import { DashboardComponent } from './tree/dashboard.component';
 		StringFilterPipe, LimitPipe, ComponentOutlet, DashboardComponent,
 		PinIndicator],
 	exports: [TreeComponent],
-	providers: [ModelConnector.Service]
+	providers: [ModelConnector.Service, StateService]
 })
 
 export class WindowManagerModule { }

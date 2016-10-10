@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { NodeInterface } from '../node/treenode.interface';
 import { Map } from '../tree/windowmapper.function';
-import { ModelPtr } from '../modelptr.model';
+import { ModelPtr, setInput } from '../modelptr.model';
 import { intersect } from './intersect.functions';
 
 export namespace ModelConnector {
@@ -10,7 +10,7 @@ export namespace ModelConnector {
 	export class Service {
 		private subscribers: Subscriber[] = [];
 		private binder: ModelPtr;
-		
+
 		/**
 		 * Add a subscriber to the subscribers list
 		 * Returns a function for unsubscribing
@@ -52,7 +52,7 @@ export namespace ModelConnector {
 		 * (Pinning starts with startPinning)
 		 */
 		pinToModel(model: ModelPtr) {
-			this.binder.setInput(model);
+			setInput(this.binder, model);
 			this.clearPinStatus();
 		}
 
