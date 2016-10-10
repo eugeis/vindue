@@ -95,7 +95,7 @@ export function deletePanel(childNode: NodeInterface.TreeNode, branches: NodeInt
 	if (0 <= i && i < branches.length) {
 		let removed = branches.splice(i, 1)[0];
 		if (branches.length == 1) {
-			sizeConservation(removed, branches);
+			branches[0].size = 1;
 		}
 	}
 }
