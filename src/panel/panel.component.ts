@@ -31,10 +31,6 @@ import { DragService } from '../drag/drag.service';
 import { NodeInterface } from '../node/treenode.interface';
 import { Map } from '../tree/windowmapper.function';
 
-interface OnPanelAction {
-	onPanelAction(e): void;
-}
-
 @Component({
 	selector: 'ee-panel',
 	styles: [`
@@ -105,7 +101,7 @@ interface OnPanelAction {
 	`
 })
 
-export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
+export class PanelComponent implements OnInit, OnDestroy {
 	@Input() sharedData: any;
 	@Input() model: ModelPtr;
 	@Input() window: string;
@@ -145,8 +141,10 @@ export class PanelComponent implements OnInit, OnPanelAction, OnDestroy {
 		}
 	}
 
-	onPanelAction(e) {
-		this.onEmitter.emit(e);
+	callbacks = {
+		onPanelAction: (e) => {
+			this.onEmitter.emit(e);
+		}
 	}
 
 	rearrange(dragInfo: DragInfo) {
