@@ -1,21 +1,21 @@
 import { NodeOrientation, inv, getClass } from './nodeorientation.enum';
 
 describe('Inverting NodeOrientation', () => {
-	it('inv(Horizontal) = Vertical', () => {
+	it('should invert horizontal to vertical', () => {
 		expect(inv(NodeOrientation.Horizontal)).toBe(NodeOrientation.Vertical);
 		expect(inv(NodeOrientation.Horizontal)).not.toBe(NodeOrientation.Horizontal);
 	});
 
-	it('inv(Vertical) = Horizontal', () => {
+	it('should invert vertical to horizontal', () => {
 		expect(inv(NodeOrientation.Vertical)).toBe(NodeOrientation.Horizontal);
 		expect(inv(NodeOrientation.Vertical)).not.toBe(NodeOrientation.Vertical);
 	});
 
-	it('getClass(Vertical) = vert', () => {
+	it('should get css-class of vert', () => {
 		expect(getClass(NodeOrientation.Vertical)).toBe("vert");
 	});
 
-	it('getClass(Horizontal) = hor', () => {
+	it('should get css-class of hor', () => {
 		expect(getClass(NodeOrientation.Horizontal)).toBe("hor");
 	});
 });

@@ -157,35 +157,35 @@ describe('Getting CardinalDirection', () => {
 
 
 describe('Converting CardinalDirection', () => {
-	it('yields north', () => {
+	it('should yield north', () => {
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.North)).toBe(CardinalDirection.North);
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Northwestnorth)).toBe(CardinalDirection.North);
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Northeastnorth)).toBe(CardinalDirection.North);
 	});
 
-	it('yields south', () => {
+	it('should yield south', () => {
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.South)).toBe(CardinalDirection.South);
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Southwestsouth)).toBe(CardinalDirection.South);
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Southeastsouth)).toBe(CardinalDirection.South);
 	});
 
-	it('yields east', () => {
+	it('should yield east', () => {
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.East)).toBe(CardinalDirection.East);
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Eastnortheast)).toBe(CardinalDirection.East);
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Eastsoutheast)).toBe(CardinalDirection.East);
 	});
 
-	it('yields west', () => {
+	it('should yield west', () => {
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.West)).toBe(CardinalDirection.West);
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Westnorthwest)).toBe(CardinalDirection.West);
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Westsouthwest)).toBe(CardinalDirection.West);
 	});
 
-	it('yields center', () => {
+	it('should yield center', () => {
 		expect(DragFunctions.convertCardinalDirection(CardinalDirection.Center)).toBe(CardinalDirection.Center);
 	});
 
-	it('fails', () => {
+	it('should fail on no input', () => {
 		expect(DragFunctions.convertCardinalDirection).toThrow("Unknown direction");
 	});
 });

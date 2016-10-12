@@ -1,7 +1,7 @@
 import { intersect } from './intersect.functions';
 
-describe("intersect", () => {
-	it("empty intersection", () => {
+describe("Intersect function", () => {
+	it("should result in an empty set", () => {
 		{
 			let ret = intersect([], []);
 			expect(ret.length).toBe(0);
@@ -28,7 +28,7 @@ describe("intersect", () => {
 	});
 
 
-	it("non-empty intersection", () => {
+	it("should result in a non-empty set", () => {
 		{
 			let ret = intersect(["1","2","3"], ["1","2","3"]).sort();
 			expect(ret.length).toBe(3);
