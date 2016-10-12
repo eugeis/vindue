@@ -26,13 +26,13 @@ import { NodeInterface } from '../node/treenode.interface';
 
 class Perspective {
 	constructor(private name: string, private tree: TreeInterface.Tree) {
-		this.tree = decycle(TreeInterface.copyTree(tree), undefined);
+		this.tree = decycle(TreeInterface.copyTree(tree));
 	}
 
 	getTree(): TreeInterface.Tree {
 		retrocycle(this.tree);
 		let returnTree: TreeInterface.Tree = TreeInterface.copyTree(this.tree);
-		this.tree = decycle(this.tree, undefined);
+		this.tree = decycle(this.tree);
 		return returnTree;
 	}
 }

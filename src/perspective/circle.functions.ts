@@ -9,7 +9,7 @@
 
 	https://github.com/douglascrockford/JSON-js/blob/master/cycle.js
 */
-	export function decycle(object, replacer) {
+	export function decycle(object) {
 		"use strict";
 
 // Make a deep copy of an object or array, assuring that there is at most
@@ -29,9 +29,6 @@
 
 // produces the string '[{"$ref":"$"}]'.
 
-// If a replacer function is provided, then it will be called for each value.
-// A replacer function receives a value and returns a replacement value.
-
 // JSONPath is used to locate the unique object. $ indicates the top level of
 // the object or array. [NUMBER] or [STRING] indicates a child element or
 // property.
@@ -45,12 +42,6 @@
 
 			var i;		  // The loop counter
 			var nu;		 // The new object or array
-
-// If a replacer function was provided, then call it to get a replacement value.
-
-			if (replacer !== undefined) {
-				value = replacer(value);
-			}
 
 // typeof null === "object", so go on if this value is really an object but not
 // one of the weird builtin objects.
@@ -104,7 +95,7 @@
 		}(object, "$"));
 	};
 
-	export function retrocycle($) {
+	export function retrocycle($): void {
 		"use strict";
 
 // Restore an object that was reduced by decycle. Members whose values are
@@ -162,5 +153,4 @@
 				}
 			}
 		}($));
-		return $;
 	}
