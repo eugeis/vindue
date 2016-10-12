@@ -23,6 +23,10 @@ import { NodeOrientation } from '../node/nodeorientation.enum';
 import { ModelPtr, copy, hasInput, setInput, getInputIdentifier } from '../modelptr.model';
 
 export namespace TreeInterface {
+	export interface Tree extends NodeInterface.TreeNode {
+		orientation: NodeOrientation
+	}
+
 	export function copyTree(tree: Tree): Tree {
 		let newTree: Tree = {
 			orientation: tree.orientation,
@@ -43,14 +47,13 @@ export namespace TreeInterface {
 		return newTree;
 	}
 
-	function resolveIdentifiers(todo: ModelPtr[], modelList: ModelPtr[], modelTranslation) {
+	function resolveIdentifiers(todo: ModelPtr[], modelList: ModelPtr[], modelTranslation: number[]) {
 		todo.forEach((d) => {
-			console.log(d.identifier + " -> " + modelTranslation[getInputIdentifier(d)])
 			setInput(d, modelList[modelTranslation[getInputIdentifier(d)]]);
 		});
 	}
 
-	function copyLeaf(n: NodeInterface.TreeNode, todo: ModelPtr[], modelList: ModelPtr[], modelTranslation) {
+	function copyLeaf(n: NodeInterface.TreeNode, todo: ModelPtr[], modelList: ModelPtr[], modelTranslation: number[]) {
 		n.branches = n.branches.map((d) => {
 			let n: NodeInterface.TreeNode = NodeInterface.cloneNodeShallow(d);
 
@@ -71,9 +74,5 @@ export namespace TreeInterface {
 		n.branches.forEach((d) => {
 			copyLeaf(d, todo, modelList, modelTranslation);
 		});
-	}
-
-	export interface Tree extends NodeInterface.TreeNode {
-		orientation: NodeOrientation
 	}
 }
