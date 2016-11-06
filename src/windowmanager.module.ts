@@ -50,6 +50,9 @@ import { TreeComponent } from './tree/tree.component';
 import { TreeHeaderComponent } from './tree/tree-header.component';
 import { DashboardComponent } from './tree/dashboard.component';
 
+import { ViewService } from './provider';
+import { View } from './view.component';
+
 @NgModule({
 	imports: [CommonModule, FormsModule, DragModule],
 	declarations: [TreeComponent, TreeHeaderComponent, PanelHeaderComponent,
@@ -57,7 +60,7 @@ import { DashboardComponent } from './tree/dashboard.component';
 		StringFilterPipe, LimitPipe, ComponentOutlet, DashboardComponent,
 		PinIndicator],
 	exports: [TreeComponent],
-	providers: [ModelConnector.Service, StateService]
+	providers: [ModelConnector.Service, StateService, ViewService]
 })
 
 export class WindowManagerModule { }

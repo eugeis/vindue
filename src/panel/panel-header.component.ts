@@ -105,7 +105,6 @@ import { NodeInterface } from '../node/treenode.interface';
 
 export class PanelHeaderComponent {
 	@Input() node: NodeInterface.TreeNode;
-	@Input() map: any;
 
 	@Output("close") closeEmitter: EventEmitter<void> = new EventEmitter<void>();
 
@@ -137,7 +136,7 @@ export class PanelHeaderComponent {
 	togglePinning() {
 		this.pinned = !this.pinned;
 		if (this.pinned) {
-			this.modelconnector.startPinning(this.node.model, this.node.window, this.map);
+			this.modelconnector.startPinning(this.node.model, this.node.window);
 		} else {
 			this.modelconnector.clearPinStatus();
 		}

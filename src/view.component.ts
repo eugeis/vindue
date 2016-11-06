@@ -18,15 +18,14 @@
  *
  * @author Jonas Möller
  */
+import { OnInit, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { ModelPtr } from './modelptr.model';
 
-export namespace Map {
-	export interface WindowMapper {
-		viewToHtml(data: any): string;
-		viewToInputElement(data: any): string[];
-		viewToOutputElement(data: any): string[];
-	}
+export class View implements OnInit, DoCheck {
+	@Input("model") viewModel: ModelPtr;
+	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
-	export interface InputElement {
-		getType(): string;
-	}
+	constructor() {}
+	ngOnInit() {}
+	ngDoCheck() {}
 }

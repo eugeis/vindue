@@ -25,7 +25,6 @@ import { NodeComponent } from '../node/node.component';
 import { NodeOrientation } from '../node/nodeorientation.enum';
 
 import { TreeInterface } from './tree.interface';
-import { Map } from './windowmapper.function';
 
 import { StateService } from '../perspective/state.service';
 
@@ -84,14 +83,12 @@ import { StateService } from '../perspective/state.service';
 			<ee-node
 				[node]="tree"
 				[orientation]="tree.orientation"
-				[map]="map"
 				[sharedData]="sharedData"
 				(on)="onPanelAction($event)">
 			</ee-node>
 		</div>
 		<div class="dashboard-curtain" *ngIf="tree.branches.length == 0 || dashboard">
 			<ee-dashboard
-				[windows]="windows"
 				(add)="add($event)"
 				(hide)="hideDashboard()">
 			</ee-dashboard>
@@ -100,21 +97,6 @@ import { StateService } from '../perspective/state.service';
 })
 
 export class TreeComponent {
-	/**
-	 * Name-Indentifiers of the windows
-	 **/
-	@Input() windows: string[] = [];
-
-	/**
-	 * Functions to map a window-name to their
-	 * inputs, outputs and html-selector
-	 */
-	@Input() map: Map.WindowMapper = {
-		viewToHtml: (d:string) => { return "" },
-		viewToInputElement: (d:string) => { return [] },
-		viewToOutputElement: (d:string) => { return [] }
-	}
-
 	/**
 	 * Data which is shared between all views
 	 */

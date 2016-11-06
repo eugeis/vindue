@@ -21,7 +21,6 @@
 import { Component, Input, ElementRef, OnInit, OnDestroy } from '@angular/core';
 
 import { ModelConnector } from './model-connector.service';
-import { Map } from '../tree/windowmapper.function';
 import { ModelPtr } from '../modelptr.model';
 
 @Component({
@@ -80,6 +79,8 @@ export class PinIndicator implements ModelConnector.Subscriber, OnInit, OnDestro
 	}
 
 	ngOnDestroy() {
-		this.unsubscribe();
+		if (this.unsubscribe) {
+			this.unsubscribe();
+		}
 	}
 }

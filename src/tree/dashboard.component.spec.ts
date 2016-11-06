@@ -27,9 +27,14 @@ import { FormsModule } from '@angular/forms';
 
 import { DashboardComponent } from './dashboard.component';
 
+import { ViewService } from '../provider';
+import { StateService } from '../perspective/state.service';
+import { ModelConnector } from '../panel/model-connector.service';
+
 /* Pipes */
 import { StringFilterPipe } from '../pipes/stringfilter.pipe';
 import { LimitPipe } from '../pipes/limit.pipe';
+
 
 let comp:    DashboardComponent;
 let fixture: ComponentFixture<DashboardComponent>;
@@ -38,7 +43,8 @@ describe("DashboardComponent", () => {
 	beforeEach( async(() => {
 		TestBed.configureTestingModule({
 			imports: [FormsModule, CommonModule, BrowserModule],
-			declarations: [DashboardComponent, StringFilterPipe, LimitPipe]
+			declarations: [DashboardComponent, StringFilterPipe, LimitPipe],
+			providers: [ModelConnector.Service, StateService, ViewService]
 		})
 		.compileComponents();
 	}));

@@ -5,4 +5,8 @@ export * from './src/node/nodeorientation.enum';
 
 export * from './src/modelptr.model';
 
-export * from './src/tree/windowmapper.function';
+export * from './src/provider';
+
+export * from './src/view.component';
+
+export * from './src/viewmetadata.interface';

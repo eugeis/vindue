@@ -20,6 +20,8 @@
  */
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+import { ViewService } from '../provider';
+
 @Component({
 	selector: 'ee-dashboard',
 	styles: [`
@@ -106,10 +108,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class DashboardComponent {
-	/**
-	 * Windows to be displayed in the dashboard
-	 */
-	@Input() windows: string[] = [];
+	windows: string[] = [];
+
+	constructor(private viewService: ViewService) {
+		this.windows = viewService.getWindows();
+	}
 
 	@Output("add") addEmitter: EventEmitter<string> = new EventEmitter<string>();
 	@Output("hide") hideEmitter: EventEmitter<void> = new EventEmitter<void>();

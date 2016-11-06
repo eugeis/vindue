@@ -27,9 +27,9 @@ import { HoverInfo } from '../drag/hoverinfo.model';
 import { CardinalDirection } from '../drag/cardinaldirection.enum';
 import { ModelPtr } from '../modelptr.model';
 import { DragService } from '../drag/drag.service';
+import { ViewService } from '../provider';
 
 import { NodeInterface } from '../node/treenode.interface';
-import { Map } from '../tree/windowmapper.function';
 
 @Component({
 	selector: 'ee-panel',
@@ -106,8 +106,6 @@ export class PanelComponent implements OnInit, OnDestroy {
 	@Input() model: ModelPtr;
 	@Input() window: string;
 
-	@Input() map: Map.WindowMapper;
-
 	@Output("insert") insertEmitter: EventEmitter<DragInfo> = new EventEmitter<DragInfo>();
 	@Output("on") onEmitter: EventEmitter<any> = new EventEmitter<any>();
 
@@ -122,17 +120,17 @@ export class PanelComponent implements OnInit, OnDestroy {
 	inputs: string[];
 	outputs: string[];
 
-	constructor(dragService: DragService) {
+	constructor(private dragService: DragService, private viewService: ViewService) {
 		this.hoverInfo = new HoverInfo();
 	}
 
 	ngOnInit() {
-		this.inputs = this.map.viewToInputElement(this.window);
-		this.outputs = this.map.viewToOutputElement(this.window);
+		this.inputs = this.viewService.viewToInputElement(this.window);
+		this.outputs = this.viewService.viewToOutputElement(this.window);
 
-		if (this.window && this.map) {
+		if (this.window) {
 			try {
-				this.html = this.map.viewToHtml(this.window);
+				this.html = this.viewService.viewToHtml(this.window);
 			} catch(e) {
 				console.warn("Exception for: " + this.window);
 				console.warn(e);

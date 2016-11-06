@@ -31,7 +31,6 @@ import { ModelPtr } from '../modelptr.model';
 import * as NodeFunctions from './node.functions';
 
 import { NodeInterface } from './treenode.interface';
-import { Map } from '../tree/windowmapper.function';
 
 @Component({
 	selector: 'ee-node',
@@ -78,7 +77,6 @@ import { Map } from '../tree/windowmapper.function';
 					<ee-node
 						[node]="branch"
 						[orientation]="nodeInv(orientation)"
-						[map]="map"
 						[sharedData]="sharedData"
 						(insertPanel)="insertPanel($event)"
 						(promotePanel)="promotePanel($event)"
@@ -91,13 +89,11 @@ import { Map } from '../tree/windowmapper.function';
 			<div *ngIf="!node.branches || node.branches.length == 0" class="ee-panel-container">
 				<ee-panel-header
 					[node]="node"
-					[map]="map"
 					(close)="closePanel()">
 				</ee-panel-header>
 				<ee-panel
 					[window]="node.window"
 					[model]="node.model"
-					[map]="map"
 					[sharedData]="sharedData"
 					(insert)="insert($event)"
 					(on)="onPanelAction($event)">
@@ -110,7 +106,6 @@ import { Map } from '../tree/windowmapper.function';
 export class NodeComponent implements OnInit {
 	@Input() node: NodeInterface.TreeNode;
 	@Input() orientation: NodeOrientation;
-	@Input() map: Map.WindowMapper;
 
 	@Input() sharedData;
 

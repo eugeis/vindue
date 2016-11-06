@@ -20,8 +20,8 @@
  */
 import { Injectable } from '@angular/core';
 
+import { ViewService } from '../provider';
 import { NodeInterface } from '../node/treenode.interface';
-import { Map } from '../tree/windowmapper.function';
 import { ModelPtr, setInput } from '../modelptr.model';
 import { intersect } from './intersect.functions';
 
@@ -30,6 +30,8 @@ export namespace ModelConnector {
 	export class Service {
 		private subscribers: Subscriber[] = [];
 		private binder: ModelPtr;
+
+		constructor(private viewService: ViewService) { }
 
 		/**
 		 * Add a subscriber to the subscribers list
@@ -53,8 +55,8 @@ export namespace ModelConnector {
 		 *
 		 * (Pinning ends with pinToModel)
 		 */
-		startPinning(model: ModelPtr, window: string, map: Map.WindowMapper) {
-			let inputs: string[] = map.viewToInputElement(window);
+		startPinning(model: ModelPtr, window: string) {
+			let inputs: string[] = this.viewService.viewToInputElement(window);
 
 			this.binder = model;
 			this.subscribers.forEach((d) => {
