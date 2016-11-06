@@ -18,6 +18,11 @@
  *
  * @author Jonas Möller
  */
+
+/*
+ * This file has been removed from tests, because it has to many dependencies
+ * and mixes DOM with behaviour tests.
+ */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
@@ -44,6 +49,8 @@ import { ModelConnector } from '../panel/model-connector.service';
 /* Perspective */
 import { StateService } from '../perspective/state.service';
 
+import { ViewService, provideViews } from '../provider';
+
 /* Pipes */
 import { StringFilterPipe } from '../pipes/stringfilter.pipe';
 import { LimitPipe } from '../pipes/limit.pipe';
@@ -68,7 +75,7 @@ describe("TreeComponent", () => {
 				PinIndicator],
 			providers: [provideComponentOutletModule({
 				imports: [CommonModule]
-			}), ModelConnector.Service, StateService]
+			}), ModelConnector.Service, StateService, ViewService]
 		})
 		.compileComponents();
 	}));
